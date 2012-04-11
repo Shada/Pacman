@@ -69,6 +69,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMenu.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="GraphicsManager.cpp" />
     <ClCompile Include="KeyListener.cpp" />
     <ClCompile Include="KeyManager.cpp" />
@@ -79,6 +80,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameMenu.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Ghost.h" />
     <ClInclude Include="GraphicsManager.h" />
     <ClInclude Include="KeyListener.h" />
     <ClInclude Include="KeyManager.h" />
