@@ -7,5 +7,5 @@ Game::Game()
 
 Game::~Game()
 {
-	SAFE_DELETE( instance );
+
 }

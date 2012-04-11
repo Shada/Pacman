@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "GameMenu.h"
 
 HINSTANCE				hInst					= NULL;  
 HWND					hWnd					= NULL;
@@ -10,6 +11,7 @@ HRESULT             InitWindow( int nCmdShow );
 LRESULT CALLBACK	WndProc( HWND, UINT, WPARAM, LPARAM);
 void				updateTimeStamp();
 void				Cleanup();
+
 
 
 int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
@@ -27,6 +29,8 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 	
 	updateTimeStamp();
 
+	GameMenu* menu = new GameMenu();
+	delete menu;
 	// Main message loop
 	MSG msg = {0};
 	while(WM_QUIT != msg.message)
