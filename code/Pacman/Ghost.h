@@ -1,5 +1,6 @@
 #pragma once
 #include "gameobject.h"
+#include "Tiles.h"
 class Ghost :
 	public GameObject
 {
