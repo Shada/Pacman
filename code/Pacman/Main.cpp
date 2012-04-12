@@ -1,18 +1,20 @@
 #include "stdafx.h"
-#include "GameMenu.h"
+#include "GraphicsManager.h"
+#include "Game.h"
 
 HINSTANCE				hInst					= NULL;  
 HWND					hWnd					= NULL;
 
 __int64 currTimeStamp = 0, prevTimeStamp = 0, cntsPerSec = 0;
-double dt, secsPerCnt;
+double dt, secsPerCnt, time;
 
 HRESULT             InitWindow( int nCmdShow );
 LRESULT CALLBACK	WndProc( HWND, UINT, WPARAM, LPARAM);
 void				updateTimeStamp();
 void				Cleanup();
 
-
+GraphicsManager *graphicsManager;
+Game* game;
 
 int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
 {
@@ -22,15 +24,23 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 		return 0;
 
 	SetWindowPos(hWnd, HWND_TOP, 50, 50, SCREENWIDTH, _SCREENHEIGHT + 32, SWP_SHOWWINDOW);
+
+	graphicsManager = GraphicsManager::getInstance(hWnd);
+
+	if( FAILED( graphicsManager->initDevice()))
+		return 0;
+	graphicsManager->clearRenderTarget();
+	game = Game::getInstance();
+
 	
 	QueryPerformanceFrequency((LARGE_INTEGER*)&cntsPerSec);
-	double time = 0;
+	time = 0;
 	secsPerCnt = 1.0 / (double)cntsPerSec;
 	
-	updateTimeStamp();
+	
+	QueryPerformanceCounter((LARGE_INTEGER*)&currTimeStamp);
+	prevTimeStamp = currTimeStamp;
 
-	GameMenu* menu = new GameMenu();
-	delete menu;
 	// Main message loop
 	MSG msg = {0};
 	while(WM_QUIT != msg.message)
@@ -49,11 +59,17 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 			
 			if(GetActiveWindow() == hWnd)
 			{
+				game->update(time);
+
+				//SetCursorPos((int)(SCREENWIDTH * 0.5f), (int)(_SCREENHEIGHT * 0.5f));
 			}
 			else
 				updateTimeStamp();
 
-			//dxHandler->swapChain();
+			graphicsManager->clearRenderTarget();
+			game->draw(time);
+			
+			graphicsManager->swapChain();
 			time = 0;
 		}
 	}
@@ -137,4 +153,6 @@ LRESULT CALLBACK WndProc( HWND hw, UINT message, WPARAM wParam, LPARAM lParam )
 
 void Cleanup()
 {
+	SAFE_DELETE(graphicsManager);
+	SAFE_DELETE(game);
 }

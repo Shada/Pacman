@@ -1,15 +1,17 @@
 #pragma once
-#include "stdafx.h"
-#include "GraphicsManager.h"
+#include "Map.h"
 
 class Game
 {
 private:
+	Map map;
+	static Game *instance;
+	
 	Game();
-	Game *instance;
 public:
 	~Game();
-	Game getInstance();
+	static Game *getInstance();
 
-
+	void update(double time);
+	void draw(double time);
 };

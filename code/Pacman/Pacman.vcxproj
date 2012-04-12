@@ -74,6 +74,7 @@
     <ClCompile Include="KeyListener.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="Tiles.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -84,8 +85,12 @@
     <ClInclude Include="GraphicsManager.h" />
     <ClInclude Include="KeyListener.h" />
     <ClInclude Include="KeyManager.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Tiles.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader.fx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
