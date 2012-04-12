@@ -160,10 +160,16 @@ void GraphicsManager::clearRenderTarget()
 	//clear depth info
 	g_pd3dDevice->ClearDepthStencilView( g_pDepthStencilView, D3D10_CLEAR_DEPTH, 1.0f, 0 );
 }
+
 void GraphicsManager::swapChain()
 {
 	//swap the chain
 	g_pSwapChain->Present( 0, 0 );
+}
+
+void GraphicsManager::resetBlendState()
+{
+	g_pd3dDevice->OMSetBlendState(NULL, 0, 0xffffffff);
 }
 
 GraphicsManager::~GraphicsManager()

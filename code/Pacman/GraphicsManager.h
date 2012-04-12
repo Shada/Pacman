@@ -17,25 +17,30 @@ private:
 	ID3D10RenderTargetView	*g_pRenderTargetView;
 	ID3D10Texture2D			*g_pDepthStencil;
 	ID3D10DepthStencilView	*g_pDepthStencilView;
-	HWND					hWnd;
 	ID3D10Effect			*g_pEffect;
+
+	HWND					hWnd;
+	
 	//Instance of self (Singleton)
 	static GraphicsManager* _this;
 	GraphicsManager(HWND g_hWnd);
-public:
-	//Singleton constructor
-	static GraphicsManager* getInstance(HWND g_hWnd);
-	//initialize device data
-	HRESULT initDevice();
-	void clearRenderTarget();
-	//switch backbuffer
-	void swapChain();
-	void render();
 
+public:
 	//shader techniques
 	ID3D10EffectTechnique	*g_pTechRender;
 
 	ID3D10InputLayout		*g_pVertexLayout;
 
+	//Singleton constructor
+	static GraphicsManager* getInstance(HWND g_hWnd);
 	~GraphicsManager();
+
+	//initialize device data
+	HRESULT initDevice();
+	void clearRenderTarget();
+
+	//switch backbuffer
+	void swapChain();
+	void render();
+	void resetBlendState();	
 };
