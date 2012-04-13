@@ -13,11 +13,17 @@ GraphicsManager::GraphicsManager(HWND g_hWnd)
 	hWnd = g_hWnd;
 	initDevice();
 }
-GraphicsManager* GraphicsManager::getInstance(HWND g_hWnd)
+GraphicsManager* GraphicsManager::createInstance(HWND g_hWnd)
 {
 	if(!_this)
 		_this = new GraphicsManager(g_hWnd);
 	return _this;
+}
+GraphicsManager* GraphicsManager::getInstance()
+{
+	if(_this)
+		return _this;
+	else return NULL;
 }
 HRESULT GraphicsManager::initDevice()
 {
@@ -152,6 +158,26 @@ HRESULT GraphicsManager::initDevice()
 		&g_pVertexLayout );
 }
 
+void GraphicsManager::useBuffer(ID3D10Buffer* vB)
+{
+	//The stride and offset
+	UINT stride = sizeof(Vertex), offset = 0;
+
+	//Set the layouts and topology
+	g_pd3dDevice->IASetInputLayout( g_pVertexLayout );
+	g_pd3dDevice->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
+	g_pd3dDevice->IASetVertexBuffers( 0, 1, &vB, &stride, &offset );
+}
+void GraphicsManager::useMaterial()
+{
+
+}
+
+void GraphicsManager::useWorldMatrices(D3DXMATRIX m[], int size)
+{
+	g_pEffect->GetVariableByName("mWorld")->AsMatrix()->SetMatrixArray((float*)&m,0,size);
+}
+
 void GraphicsManager::clearRenderTarget()
 {
 	//clear render target
@@ -159,6 +185,12 @@ void GraphicsManager::clearRenderTarget()
 
 	//clear depth info
 	g_pd3dDevice->ClearDepthStencilView( g_pDepthStencilView, D3D10_CLEAR_DEPTH, 1.0f, 0 );
+}
+
+
+void GraphicsManager::render()
+{
+
 }
 
 void GraphicsManager::swapChain()

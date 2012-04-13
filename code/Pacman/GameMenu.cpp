@@ -5,21 +5,25 @@ GameMenu::GameMenu()
 	:KeyListener()
 {
 	selected = 0;
-	numberofButtons = 3;
+	numberofButtons = 0;
+	Game* game = Game::getInstance();
 
-	buttonText[0] = "new game";
-	buttonText[1] = "high score";
-	buttonText[2] = "exit";
-	string banan = buttonText[1];
+	//addButton([]{ Game::getInstance()->newGame(); }, "new game");
+	//addButton([]{ ; }, "leaderboard");
+	addButton([]{ PostQuitMessage(0); }, "exit");
 }
 
-void GameMenu::handleKeyStrokes(char Key)
+
+void GameMenu::handleKeyStrokes(int key)
 {
-	//should be up and down later
-	if(Key == 'W')
+	if(key == VK_UP)
 		changeSelected(1);
-	else if(Key == 'S')
+	else if(key == VK_DOWN)
 		changeSelected(-1);
+	else if(key == VK_RETURN)
+	{
+		buttons.at(selected)->press();
+	} 
 }
 
 void GameMenu::changeSelected(int dir)
@@ -27,17 +31,23 @@ void GameMenu::changeSelected(int dir)
 	if(abs(dir) == 1)
 	{
 		selected+= dir;
-	
-		if(selected >= numberofButtons)
+		
+		if(selected >= buttons.size())
 			selected = 0;
 		else if(selected < 0)
-			selected = numberofButtons-1;
+			selected = buttons.size()-1;
 	}
 	//else wrong input
 }
+
 void GameMenu::draw()
 {
-	//GraphicsManager::getInstance()->render(model)
+	GraphicsManager* m = GraphicsManager::getInstance();
+	if(m)
+	{
+		//m->useBuffer(vB);
+		m->render();
+	}
 }
 GameMenu::~GameMenu()
 {

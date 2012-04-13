@@ -32,7 +32,8 @@ public:
 	ID3D10InputLayout		*g_pVertexLayout;
 
 	//Singleton constructor
-	static GraphicsManager* getInstance(HWND g_hWnd);
+	static GraphicsManager* getInstance();
+	static GraphicsManager* createInstance(HWND g_hWnd);
 	~GraphicsManager();
 
 	//initialize device data
@@ -43,4 +44,8 @@ public:
 	void swapChain();
 	void render();
 	void resetBlendState();	
+	
+	void useMaterial();
+	void useBuffer(ID3D10Buffer* vB);
+	void useWorldMatrices(D3DXMATRIX m[], int size);
 };

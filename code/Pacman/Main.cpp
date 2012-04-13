@@ -25,7 +25,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
 	SetWindowPos(hWnd, HWND_TOP, 50, 50, SCREENWIDTH, _SCREENHEIGHT + 32, SWP_SHOWWINDOW);
 
-	graphicsManager = GraphicsManager::getInstance(hWnd);
+	graphicsManager = GraphicsManager::createInstance(hWnd);
 
 	if( FAILED( graphicsManager->initDevice()))
 		return 0;
