@@ -3,12 +3,12 @@
 GraphicsManager *GraphicsManager::_this = NULL;
 GraphicsManager::GraphicsManager(HWND g_hWnd)
 {
-	g_driverType			= D3D10_DRIVER_TYPE_NULL;
-	g_pd3dDevice			= NULL;
-	g_pSwapChain			= NULL;
-	g_pRenderTargetView		= NULL;
-	g_pDepthStencil			= NULL;
-	g_pDepthStencilView		= NULL;
+	g_driverType = D3D10_DRIVER_TYPE_NULL;
+	g_pd3dDevice = NULL;
+	g_pSwapChain = NULL;
+	g_pRenderTargetView = NULL;
+	g_pDepthStencil = NULL;
+	g_pDepthStencilView = NULL;
 
 	hWnd = g_hWnd;
 	initDevice();
@@ -36,10 +36,10 @@ HRESULT GraphicsManager::initDevice()
 
 	UINT createDeviceFlags = 0;
 #ifdef _DEBUG
-	createDeviceFlags |= D3D10_CREATE_DEVICE_DEBUG;
+createDeviceFlags |= D3D10_CREATE_DEVICE_DEBUG;
 #endif
 
-	D3D10_DRIVER_TYPE driverTypes[] = 
+	D3D10_DRIVER_TYPE driverTypes[] =
 	{
 		D3D10_DRIVER_TYPE_HARDWARE,
 		D3D10_DRIVER_TYPE_REFERENCE,
@@ -63,8 +63,8 @@ HRESULT GraphicsManager::initDevice()
 	for( UINT driverTypeIndex = 0; driverTypeIndex < numDriverTypes; driverTypeIndex++ )
 	{
 		g_driverType = driverTypes[driverTypeIndex];
-		hr = D3D10CreateDeviceAndSwapChain( NULL, g_driverType, NULL, createDeviceFlags, 
-			D3D10_SDK_VERSION, &sd, &g_pSwapChain, &g_pd3dDevice );
+		hr = D3D10CreateDeviceAndSwapChain( NULL, g_driverType, NULL, createDeviceFlags,
+		D3D10_SDK_VERSION, &sd, &g_pSwapChain, &g_pd3dDevice );
 		if( SUCCEEDED( hr ) )
 			break;
 	}
@@ -121,18 +121,18 @@ HRESULT GraphicsManager::initDevice()
 	g_pd3dDevice->RSSetViewports( 1, &vp );
 	//Init shader effect
 	DWORD dwShaderFlags = D3D10_SHADER_ENABLE_BACKWARDS_COMPATIBILITY;
-	if(FAILED(D3DX10CreateEffectFromFile(	"shader.fx",
-											NULL,
-											NULL,
-											"fx_4_0",
-											dwShaderFlags,
-											0,
-											g_pd3dDevice,
-											NULL,
-											NULL,
-											&g_pEffect,
-											NULL,
-											NULL)))
+	if(FAILED(D3DX10CreateEffectFromFile( "shader.fx",
+		NULL,
+		NULL,
+		"fx_4_0",
+		dwShaderFlags,
+		0,
+		g_pd3dDevice,
+		NULL,
+		NULL,
+		&g_pEffect,
+		NULL,
+		NULL)))
 	{
 		MessageBox(0, "Error compiling shader!", "Shader error!", 0);
 		return E_FAIL;
@@ -152,12 +152,11 @@ HRESULT GraphicsManager::initDevice()
 
 	//Create Input Layout (== Vertex Declaration)
 	g_pd3dDevice->CreateInputLayout(vertexLayout,
-		sizeof(vertexLayout) / sizeof(D3D10_INPUT_ELEMENT_DESC),
-		PassDesc.pIAInputSignature,
-		PassDesc.IAInputSignatureSize,
-		&g_pVertexLayout );
+	sizeof(vertexLayout) / sizeof(D3D10_INPUT_ELEMENT_DESC),
+	PassDesc.pIAInputSignature,
+	PassDesc.IAInputSignatureSize,
+	&g_pVertexLayout );
 }
-
 void GraphicsManager::useBuffer(ID3D10Buffer* vB)
 {
 	//The stride and offset
@@ -172,12 +171,22 @@ void GraphicsManager::useMaterial()
 {
 
 }
-
+void GraphicsManager::resetBlendState()
+{
+	g_pd3dDevice->OMSetBlendState( NULL, 0, 0xffffffff );
+}
+void GraphicsManager::useTechnique(ID3D10EffectTechnique* tech)
+{
+	//should prob be send in in the render function instead.
+}
 void GraphicsManager::useWorldMatrices(D3DXMATRIX m[], int size)
 {
 	g_pEffect->GetVariableByName("mWorld")->AsMatrix()->SetMatrixArray((float*)&m,0,size);
 }
+void GraphicsManager::render()
+{
 
+}
 void GraphicsManager::clearRenderTarget()
 {
 	//clear render target
@@ -186,24 +195,20 @@ void GraphicsManager::clearRenderTarget()
 	//clear depth info
 	g_pd3dDevice->ClearDepthStencilView( g_pDepthStencilView, D3D10_CLEAR_DEPTH, 1.0f, 0 );
 }
-
-
-void GraphicsManager::render()
-{
-
-}
-
 void GraphicsManager::swapChain()
 {
 	//swap the chain
 	g_pSwapChain->Present( 0, 0 );
 }
-
-void GraphicsManager::resetBlendState()
+void GraphicsManager::createFont(LPD3DX10FONT* font, int height,LPCSTR fontname)
 {
-	g_pd3dDevice->OMSetBlendState(NULL, 0, 0xffffffff);
+	D3DX10CreateFont( g_pd3dDevice,height,0,FW_BOLD,0,FALSE,DEFAULT_CHARSET,
+							OUT_TT_ONLY_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH | FF_DONTCARE, fontname, font );
 }
-
+void GraphicsManager::createSprite(LPD3DX10SPRITE* sprite)
+{
+	D3DX10CreateSprite( g_pd3dDevice, 256, sprite);
+}
 GraphicsManager::~GraphicsManager()
 {
 	SAFE_RELEASE(g_pd3dDevice);

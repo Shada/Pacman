@@ -1,18 +1,13 @@
 #include "GameMenu.h"
-
+#include "Game.h"
 
 GameMenu::GameMenu()
 	:KeyListener()
 {
 	selected = 0;
 	numberofButtons = 0;
-	Game* game = Game::getInstance();
 
 	vB = NULL;
-
-	//addButton([]{ Game::getInstance()->newGame(); }, "new game");
-	//addButton([]{ ; }, "leaderboard");
-	addButton([]{ PostQuitMessage(0); }, "exit");
 }
 
 
@@ -32,26 +27,38 @@ void GameMenu::changeSelected(int dir)
 {
 	if(abs(dir) == 1)
 	{
-		selected += dir;
+		buttons.at(selected)->setUnselected();
+
+		selected+= dir;
 		
 		if(selected >= buttons.size())
 			selected = 0;
 		else if(selected < 0)
 			selected = buttons.size()-1;
+
+		buttons.at(selected)->setSelected();
 	}
 	//else wrong input
 }
-
+void GameMenu::clearButtons()
+{
+	for(unsigned int i = 0; i < buttons.size(); i++)
+		SAFE_DELETE(buttons.at(i));
+}
 void GameMenu::draw()
 {
-	GraphicsManager *m = GraphicsManager::getInstance();
+	GraphicsManager* m = GraphicsManager::getInstance();
 	if(m)
 	{
 		//m->useBuffer(vB);
 		m->render();
+		for(unsigned int i = 0; i < buttons.size(); i++)
+			buttons.at(i)->draw();
 	}
 }
 GameMenu::~GameMenu()
 {
-	SAFE_RELEASE( vB );
+	
+	clearButtons();
+	SAFE_RELEASE(vB);
 }
