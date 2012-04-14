@@ -2,11 +2,13 @@
 #include "Map.h"
 #include "GraphicsManager.h"
 #include "GameMenu.h"
+#include "KeyManager.h"
 class Game
 {
 private:
 	Map map;
 	GameMenu* menu;
+	KeyManager* keyManager;
 	static Game *instance;
 	
 	//these two takes the menu and first clears the buttons and then

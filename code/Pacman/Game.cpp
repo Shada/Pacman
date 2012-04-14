@@ -5,6 +5,9 @@ Game::Game()
 {
 	menu = NULL;
 	createMainMenu();
+
+	keyManager = new KeyManager();
+	keyManager->attach((KeyListener*)menu);
 }
 
 Game *Game::getInstance()
@@ -17,7 +20,7 @@ Game *Game::getInstance()
 
 void Game::update(double time)
 {
-
+	keyManager->update(time);
 }
 
 void Game::draw(double time)
@@ -34,6 +37,8 @@ void Game::createMainMenu()
 	//menu->addButton([]{ newGame(); },D3DXVECTOR2(50,240), "new game");
 	menu->addButton([]{ ; }, D3DXVECTOR2(50,140), "leaderboard");
 	menu->addButton([]{ PostQuitMessage(0); }, D3DXVECTOR2(50,40), "exit");
+	
+	menu->setFirstSelected();
 }
 void Game::createIngameMenu()
 {
@@ -45,4 +50,5 @@ void Game::createIngameMenu()
 Game::~Game()
 {
 	SAFE_DELETE(menu);
+	SAFE_DELETE(keyManager);
 }
