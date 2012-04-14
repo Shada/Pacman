@@ -1,6 +1,6 @@
 #pragma once
 #include "gameobject.h"
-#include "Tiles.h"
+#include "Tile.h"
 class Ghost :
 	public GameObject
 {
@@ -15,7 +15,7 @@ private:
 	void flee();
 
 	//calulates closest path to the tile sent in using dijksksstras algorithm
-	void calcRoute(Tiles* tile);
+	void calcRoute(Tile* tile);
 
 	//follow that route
 	void followRoute();

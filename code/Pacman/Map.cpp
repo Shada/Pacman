@@ -10,7 +10,7 @@ Map::Map()
 	{
 		for(int x = 0; x < width-1; x++)
 		{
-			tiles.push_back(new Tile(D3DXVECTOR3(x*dim.x, y*dim.y, -10),dim));
+			tiles.push_back(new Tile(D3DXVECTOR3(x * dim.x, y * dim.y, -10),dim));
 		}
 	}
 
