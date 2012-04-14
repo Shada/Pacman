@@ -9,7 +9,7 @@ KeyManager::KeyManager()
 	usedkeys.push_back(VK_RIGHT);
 	usedkeys.push_back(VK_RETURN);
 	for(int i = 0; i < 5; i++)
-		prevKeyState.push_back(false);
+		prevKeyState.push_back(0);
 }
 void KeyManager::attach(KeyListener* listener)
 {
@@ -30,14 +30,11 @@ void KeyManager::update(float dt)
 {
 	for(int i= 0; i < usedkeys.size(); i++)
 	{
+		SHORT ks = GetKeyState(usedkeys.at(i));
 		//NOT BOOL!!! SHORT!!!!!
-		if(!GetKeyState(usedkeys.at(i)) && prevKeyState.at(i))
-		{
+		if((ks == -127 || ks == -128) && (prevKeyState.at(i) == 0 || prevKeyState.at(i) == 1))
 			notify(usedkeys.at(i));
-		}
-		if(GetKeyState(usedkeys.at(i)))
-			prevKeyState.at(i) = GetKeyState(usedkeys.at(i));
-		prevKeyState.at(i) = GetKeyState(usedkeys.at(i));
+		prevKeyState.at(i) = ks;
 	}
 }
 KeyManager::~KeyManager()

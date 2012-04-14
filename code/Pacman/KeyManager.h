@@ -7,7 +7,7 @@ private:
 	vector<KeyListener*> subscribers;
 	//These two have same amount of elements and use the same index. ((CHANGE TO SHORT!½!!!))
 	vector<int> usedkeys;
-	vector<bool> prevKeyState;
+	vector<SHORT> prevKeyState;
 public:
 	KeyManager();
 	//adds a subscriber
