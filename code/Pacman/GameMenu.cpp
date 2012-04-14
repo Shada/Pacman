@@ -8,6 +8,8 @@ GameMenu::GameMenu()
 	numberofButtons = 0;
 	Game* game = Game::getInstance();
 
+	vB = NULL;
+
 	//addButton([]{ Game::getInstance()->newGame(); }, "new game");
 	//addButton([]{ ; }, "leaderboard");
 	addButton([]{ PostQuitMessage(0); }, "exit");
@@ -30,7 +32,7 @@ void GameMenu::changeSelected(int dir)
 {
 	if(abs(dir) == 1)
 	{
-		selected+= dir;
+		selected += dir;
 		
 		if(selected >= buttons.size())
 			selected = 0;
@@ -42,7 +44,7 @@ void GameMenu::changeSelected(int dir)
 
 void GameMenu::draw()
 {
-	GraphicsManager* m = GraphicsManager::getInstance();
+	GraphicsManager *m = GraphicsManager::getInstance();
 	if(m)
 	{
 		//m->useBuffer(vB);
@@ -51,4 +53,5 @@ void GameMenu::draw()
 }
 GameMenu::~GameMenu()
 {
+	SAFE_RELEASE( vB );
 }

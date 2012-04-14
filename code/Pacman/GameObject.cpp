@@ -1,14 +1,16 @@
 #include "GameObject.h"
 
 
-GameObject::GameObject(void)
+GameObject::GameObject()
 	:KeyListener()
 {
-	pos = new D3DXVECTOR3(0,0,0);
+	pos = new D3DXVECTOR3(0, 0, 0);
+	vB = NULL;
 }
 
-
-GameObject::~GameObject(void)
+GameObject::~GameObject()
 {
-	SAFE_DELETE(pos);
+	SAFE_DELETE( pos );
+	//SAFE_DELETE( currentTile );
+	SAFE_RELEASE( vB );
 }
