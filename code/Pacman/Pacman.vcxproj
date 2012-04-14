@@ -71,6 +71,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="GraphicsManager.cpp" />
+    <ClCompile Include="HighScore.cpp" />
     <ClCompile Include="KeyListener.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -79,10 +80,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameButton.h" />
     <ClInclude Include="GameMenu.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="GraphicsManager.h" />
+    <ClInclude Include="HighScore.h" />
     <ClInclude Include="KeyListener.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="Map.h" />

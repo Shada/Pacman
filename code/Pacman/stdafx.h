@@ -4,6 +4,9 @@
 #include <iostream>
 #include <vector>
 
+#include <sstream>
+#include <fstream>
+
 using namespace std;
 
 #define SCREENWIDTH (1024)

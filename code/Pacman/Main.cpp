@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GraphicsManager.h"
 #include "Game.h"
+#include "KeyManager.h"
 
 HINSTANCE				hInst					= NULL;  
 HWND					hWnd					= NULL;
@@ -15,6 +16,7 @@ void				Cleanup();
 
 GraphicsManager *graphicsManager;
 Game* game;
+KeyManager* km;
 
 int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
 {
@@ -32,7 +34,8 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 	graphicsManager->clearRenderTarget();
 	game = Game::getInstance();
 
-	
+	km = new KeyManager();
+
 	QueryPerformanceFrequency((LARGE_INTEGER*)&cntsPerSec);
 	time = 0;
 	secsPerCnt = 1.0 / (double)cntsPerSec;
@@ -60,7 +63,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 			if(GetActiveWindow() == hWnd)
 			{
 				game->update(time);
-
+				km->update(dt);
 				//SetCursorPos((int)(SCREENWIDTH * 0.5f), (int)(_SCREENHEIGHT * 0.5f));
 			}
 			else
@@ -155,4 +158,5 @@ void Cleanup()
 {
 	SAFE_DELETE(graphicsManager);
 	SAFE_DELETE(game);
+	SAFE_DELETE(km);
 }
