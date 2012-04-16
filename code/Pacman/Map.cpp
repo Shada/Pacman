@@ -1,7 +1,5 @@
 #include "Map.h"
 
-
-
 Map::Map()
 {
 	D3DXVECTOR2 dim(10,10);

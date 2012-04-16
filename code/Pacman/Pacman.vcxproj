@@ -66,6 +66,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AI.cpp" />
+    <ClCompile Include="AverageAI.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMenu.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -81,9 +83,13 @@
     <ClCompile Include="MtlReader.cpp" />
     <ClCompile Include="ObjReader.cpp" />
     <ClCompile Include="PolygonGroup.cpp" />
+    <ClCompile Include="SimpleAI.cpp" />
+    <ClCompile Include="SmartAI.cpp" />
     <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AI.h" />
+    <ClInclude Include="AverageAI.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameButton.h" />
     <ClInclude Include="GameMenu.h" />
@@ -99,6 +105,8 @@
     <ClInclude Include="MtlReader.h" />
     <ClInclude Include="ObjReader.h" />
     <ClInclude Include="PolygonGroup.h" />
+    <ClInclude Include="SimpleAI.h" />
+    <ClInclude Include="SmartAI.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Tile.h" />
   </ItemGroup>

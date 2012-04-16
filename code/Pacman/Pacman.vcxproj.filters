@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Ghost">
+      <UniqueIdentifier>{4dd9bea1-1213-40b9-b663-393315b75edf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -34,9 +37,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="KeyManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Ghost.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
@@ -63,6 +63,21 @@
     <ClCompile Include="Tile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Ghost.cpp">
+      <Filter>Ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="AI.cpp">
+      <Filter>Ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleAI.cpp">
+      <Filter>Ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="AverageAI.cpp">
+      <Filter>Ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="SmartAI.cpp">
+      <Filter>Ghost</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -84,9 +99,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="KeyManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Ghost.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Map.h">
@@ -115,6 +127,21 @@
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ghost.h">
+      <Filter>Ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="AI.h">
+      <Filter>Ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleAI.h">
+      <Filter>Ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="AverageAI.h">
+      <Filter>Ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="SmartAI.h">
+      <Filter>Ghost</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

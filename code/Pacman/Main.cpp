@@ -32,8 +32,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 		return 0;
 	graphicsManager->clearRenderTarget();
 	game = Game::getInstance();
-
-
+	
 	QueryPerformanceFrequency((LARGE_INTEGER*)&cntsPerSec);
 	time = 0;
 	secsPerCnt = 1.0 / (double)cntsPerSec;
