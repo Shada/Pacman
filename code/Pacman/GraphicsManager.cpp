@@ -156,7 +156,10 @@ createDeviceFlags |= D3D10_CREATE_DEVICE_DEBUG;
 	PassDesc.pIAInputSignature,
 	PassDesc.IAInputSignatureSize,
 	&g_pVertexLayout );
+
+	return S_OK;
 }
+
 void GraphicsManager::useBuffer(ID3D10Buffer* vB)
 {
 	//The stride and offset
@@ -167,26 +170,32 @@ void GraphicsManager::useBuffer(ID3D10Buffer* vB)
 	g_pd3dDevice->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
 	g_pd3dDevice->IASetVertexBuffers( 0, 1, &vB, &stride, &offset );
 }
+
 void GraphicsManager::useMaterial()
 {
 
 }
+
 void GraphicsManager::resetBlendState()
 {
 	g_pd3dDevice->OMSetBlendState( NULL, 0, 0xffffffff );
 }
+
 void GraphicsManager::useTechnique(ID3D10EffectTechnique* tech)
 {
 	//should prob be send in in the render function instead.
 }
+
 void GraphicsManager::useWorldMatrices(D3DXMATRIX m[], int size)
 {
 	g_pEffect->GetVariableByName("mWorld")->AsMatrix()->SetMatrixArray((float*)&m,0,size);
 }
+
 void GraphicsManager::render()
 {
 
 }
+
 void GraphicsManager::clearRenderTarget()
 {
 	//clear render target
@@ -195,20 +204,25 @@ void GraphicsManager::clearRenderTarget()
 	//clear depth info
 	g_pd3dDevice->ClearDepthStencilView( g_pDepthStencilView, D3D10_CLEAR_DEPTH, 1.0f, 0 );
 }
+
 void GraphicsManager::swapChain()
 {
 	//swap the chain
 	g_pSwapChain->Present( 0, 0 );
 }
+
 void GraphicsManager::createFont(LPD3DX10FONT* font, int height,LPCSTR fontname)
 {
 	D3DX10CreateFont( g_pd3dDevice,height,0,FW_BOLD,0,FALSE,DEFAULT_CHARSET,
 							OUT_TT_ONLY_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH | FF_DONTCARE, fontname, font );
+
 }
+
 void GraphicsManager::createSprite(LPD3DX10SPRITE* sprite)
 {
 	D3DX10CreateSprite( g_pd3dDevice, 256, sprite);
 }
+
 GraphicsManager::~GraphicsManager()
 {
 	SAFE_RELEASE(g_pd3dDevice);

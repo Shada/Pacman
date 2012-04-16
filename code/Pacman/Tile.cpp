@@ -39,6 +39,4 @@ bool Tile::checkDirection(char direction)
 
 Tile::~Tile()
 {
-	for(int i = 0; i < 4; i++)
-		SAFE_DELETE( neighbouringTiles.at(i) );
 }

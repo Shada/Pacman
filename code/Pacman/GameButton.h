@@ -64,5 +64,3 @@ public:
 		SAFE_RELEASE(sprite);
 	}
 };
-
-

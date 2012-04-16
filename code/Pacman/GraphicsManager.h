@@ -25,6 +25,8 @@ private:
 	//Singleton constructor
 	GraphicsManager(HWND g_hWnd);
 public:
+
+	~GraphicsManager();
 	
 	static GraphicsManager* getInstance();
 	static GraphicsManager* createInstance(HWND g_hWnd);
@@ -50,6 +52,4 @@ public:
 	ID3D10EffectTechnique *g_pTechRender;
 
 	ID3D10InputLayout *g_pVertexLayout;
-
-~GraphicsManager();
 };

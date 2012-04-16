@@ -29,9 +29,9 @@ private:
 	//determines how the ghost will behave 
 	//AI* ai; (not implemented yet)
 public:
-	Ghost(void);
+	Ghost();
+	~Ghost();
+
 	void draw();
 	void update(float dt);
-	~Ghost(void);
 };
-

@@ -1,7 +1,7 @@
 #include "Ghost.h"
 
 
-Ghost::Ghost(void)
+Ghost::Ghost()
 {
 	dead = false;
 }
@@ -10,6 +10,6 @@ void Ghost::live()
 {
 	dead = false;
 }
-Ghost::~Ghost(void)
+Ghost::~Ghost()
 {
 }
