@@ -5,8 +5,8 @@ class SimpleAI :
 	public AI
 {
 private:
-	char decideMovement(Tile *currentTile);
+	Direction decideMovement(Tile *currentTile);
 public:
-	SimpleAI();
+	SimpleAI(int tileAmount);
 	~SimpleAI();
 };

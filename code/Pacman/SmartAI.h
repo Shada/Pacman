@@ -5,8 +5,8 @@ class SmartAI :
 	public AI
 {
 public:
-	SmartAI();
+	SmartAI(int tileAmount);
 	~SmartAI();
 
-	char decideMovement(Tile *currentTile);
+	Direction decideMovement(Tile *currentTile);
 };

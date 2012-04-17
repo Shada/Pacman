@@ -9,10 +9,12 @@ private:
 
 	vector<Tile*> neighbouringTiles;
 public:
-	Tile(vector<Tile*> neighbours, D3DXVECTOR3 pos, D3DXVECTOR2 dim);
 	Tile(D3DXVECTOR3 pos, D3DXVECTOR2 dim);
 	~Tile();
+	bool visited;
+
+	void setNeighbours(vector<Tile*> neighbours);
 
 	// returns the tile you want to go to, if the direction is valid
-	Tile *checkDirection(char direction);
+	Tile *checkDirection(Direction direction);
 };

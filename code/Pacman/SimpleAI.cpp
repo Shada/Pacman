@@ -1,13 +1,14 @@
 #include "SimpleAI.h"
 
 
-SimpleAI::SimpleAI()
+SimpleAI::SimpleAI(int tileAmount)
+	:AI(tileAmount)
 {
 }
 
-char SimpleAI::decideMovement(Tile *currentTile)
+Direction SimpleAI::decideMovement(Tile *currentTile)
 {
-	return 1;
+	return Direction::size;
 }
 
 SimpleAI::~SimpleAI()

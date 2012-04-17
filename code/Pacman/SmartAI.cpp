@@ -1,13 +1,14 @@
 #include "SmartAI.h"
 
 
-SmartAI::SmartAI()
+SmartAI::SmartAI(int tileAmount)
+	:AI(tileAmount)
 {
 }
 
-char SmartAI::decideMovement(Tile *currentTile)
+Direction SmartAI::decideMovement(Tile *currentTile)
 {
-	return 1;
+	return Direction::size;
 }
 
 SmartAI::~SmartAI()

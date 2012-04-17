@@ -5,8 +5,8 @@ class AverageAI :
 	public AI
 {
 public:
-	AverageAI();
+	AverageAI(int tileAmount);
 	~AverageAI();
 
-	char decideMovement(Tile *currentTile);
+	Direction decideMovement(Tile *currentTile);
 };

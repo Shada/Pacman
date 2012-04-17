@@ -1,3 +1,4 @@
+#pragma once
 #include <Windows.h>
 #include <D3D10.h>
 #include <D3DX10.h>
@@ -11,6 +12,8 @@ using namespace std;
 
 #define SCREENWIDTH (1024)
 #define _SCREENHEIGHT (768)
+
+enum Direction{ north, south, east, west, size };
 
 #define SAFE_DELETE(x) if(x) { delete(x); (x) = NULL; }
 #define SAFE_RELEASE(x) if(x){(x)->Release();(x) = NULL;}

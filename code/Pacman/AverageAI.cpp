@@ -1,13 +1,14 @@
 #include "AverageAI.h"
 
 
-AverageAI::AverageAI()
+AverageAI::AverageAI(int tileAmount)
+	:AI(tileAmount)
 {
 }
 
-char AverageAI::decideMovement(Tile *currentTile)
+Direction AverageAI::decideMovement(Tile *currentTile)
 {
-	return 1;
+	return Direction::size;
 }
 
 AverageAI::~AverageAI()
