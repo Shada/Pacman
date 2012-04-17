@@ -13,9 +13,11 @@ Model::Model(string name)
 	g_pVB = NULL;
 }
 
-void Model::Draw()
+void Model::draw(ID3D10EffectTechnique* tech)
 {
-	
+	GraphicsManager::getInstance()->useBuffer(g_pVB);
+	for( unsigned int i = 0; i < groups.size(); i++ )
+		groups.at(i).draw(tech);
 }
 void Model::feedData()
 { 

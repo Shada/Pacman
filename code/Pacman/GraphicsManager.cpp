@@ -171,29 +171,43 @@ void GraphicsManager::useBuffer(ID3D10Buffer* vB)
 	g_pd3dDevice->IASetVertexBuffers( 0, 1, &vB, &stride, &offset );
 }
 
-void GraphicsManager::useMaterial()
+void GraphicsManager::useMaterial(Material* mat)
 {
-
+	//Send in variables to the shader
+	ID3D10ShaderResourceView* texture = mat->getTextureResource();
+	ID3D10ShaderResourceView* alpha = mat->getAlphaResource();
+	if(texture)
+		g_pEffect->GetVariableByName("pic")->AsShaderResource()->SetResource(texture);
+	if(alpha)
+		g_pEffect->GetVariableByName("alphaMap")->AsShaderResource()->SetResource(alpha);
+	g_pEffect->GetVariableByName( "Ka" )->AsVector()->SetFloatVector( (float*)&mat->getKa() );
+	g_pEffect->GetVariableByName( "Kd" )->AsVector()->SetFloatVector( (float*)&mat->getKd() );
+	g_pEffect->GetVariableByName( "Ks" )->AsVector()->SetFloatVector( (float*)&mat->getKs() );
 }
 
 void GraphicsManager::resetBlendState()
 {
 	g_pd3dDevice->OMSetBlendState( NULL, 0, 0xffffffff );
 }
-
-void GraphicsManager::useTechnique(ID3D10EffectTechnique* tech)
+void GraphicsManager::useWorldMatrix(D3DXMATRIX m)
 {
-	//should prob be send in in the render function instead.
+	g_pEffect->GetVariableByName("mWorld")->AsMatrix()->SetMatrix((float*)&m);
 }
 
-void GraphicsManager::useWorldMatrices(D3DXMATRIX m[], int size)
+void GraphicsManager::useWorldMatrices(const D3DXMATRIX m[], int size)
 {
 	g_pEffect->GetVariableByName("mWorld")->AsMatrix()->SetMatrixArray((float*)&m,0,size);
 }
 
-void GraphicsManager::render()
+void GraphicsManager::render(ID3D10EffectTechnique* tech, int bufferIndex, int numberOfVertices)
 {
-
+	D3D10_TECHNIQUE_DESC techDesc;
+	tech->GetDesc( &techDesc );
+	for( UINT p = 0; p < techDesc.Passes; p++ )
+	{
+		tech->GetPassByIndex( p )->Apply(0);
+		g_pd3dDevice->Draw(numberOfVertices, bufferIndex);
+	}
 }
 
 void GraphicsManager::clearRenderTarget()

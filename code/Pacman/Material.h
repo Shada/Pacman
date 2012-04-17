@@ -1,5 +1,6 @@
 #pragma once
 #include "stdafx.h"
+#include "GraphicsManager.h"
 class Material
 {
 	friend class MtlReader;
@@ -21,14 +22,16 @@ public:
 
 	void loadImageData(ID3D10Device* g_pd3dDevice);
 	void loadAlphaMap(ID3D10Device* g_pd3dDevice);
-	void useShaderVariables(ID3D10Effect* g_pEffect);
 
 	void setTexture(string textureFileName)		{ this->textureFileName = textureFileName; }
 	void setAlphaMap(string alphaMapFileName)	{ this->alphaMapFileName = alphaMapFileName; }
 
-	D3DXVECTOR3 getKa()			{ return ka;				}
-	D3DXVECTOR3 getKd()			{ return kd;				}
-	D3DXVECTOR3 getKs()			{ return ks;				}
+	const D3DXVECTOR3 getKa() { return ka; }
+	const D3DXVECTOR3 getKd() { return kd; }
+	const D3DXVECTOR3 getKs() { return ks; }
+
+	ID3D10ShaderResourceView* getTextureResource() { return g_pTextureResource; }
+	ID3D10ShaderResourceView* getAlphaResource()   { return g_pAlphaResource;   }
 	string getName()			{ return name;				}
 	string getTextureFileName() { return textureFileName;	}
 };

@@ -8,9 +8,12 @@ PolygonGroup::PolygonGroup(string name)
 	material = new Material((char*)"default");
 }
 
-void PolygonGroup::Draw( GraphicsManager* h, ID3D10EffectTechnique* tech )
+void PolygonGroup::draw(ID3D10EffectTechnique* tech )
 {
-	h->render();
+	GraphicsManager* m = GraphicsManager::getInstance();
+
+	m->useMaterial(material);
+	m->render(tech,bufferIndex,getVertexAmount());
 }
 void PolygonGroup::feedData(D3DXVECTOR3* vertex, D3DXVECTOR2* textureCoordinate, D3DXVECTOR3* normal)
 {

@@ -17,7 +17,9 @@ public:
 	PolygonGroup(string name);
 	~PolygonGroup();
 
-	void Draw(GraphicsManager* h, ID3D10EffectTechnique* tech);
+	//first sets the material to be used by the graphicsmanager
+	//to this groups material, then calls render.
+	void draw(ID3D10EffectTechnique* tech);
 
 	void feedData(D3DXVECTOR3* vertex, D3DXVECTOR2* textureCoordinate, D3DXVECTOR3* normal);
 	void feedToPData(Vertex* pData);
