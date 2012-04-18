@@ -8,7 +8,7 @@ AverageAI::AverageAI(int tileAmount)
 
 Direction AverageAI::decideMovement(Tile *currentTile)
 {
-	return Direction::size;
+	return D_SIZE;
 }
 
 AverageAI::~AverageAI()

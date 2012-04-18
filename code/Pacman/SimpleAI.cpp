@@ -8,7 +8,7 @@ SimpleAI::SimpleAI(int tileAmount)
 
 Direction SimpleAI::decideMovement(Tile *currentTile)
 {
-	return Direction::size;
+	return D_SIZE;
 }
 
 SimpleAI::~SimpleAI()

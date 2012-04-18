@@ -7,7 +7,7 @@ class Route
 {
 private:
 	int cost;
-	list<char> route;
+	list<Direction> route;
 public:
 	Route();
 	~Route();
@@ -15,6 +15,6 @@ public:
 	bool isEmpty() { return route.empty(); }
 	int getCost() { return cost; }
 
-	void pushBack(char dir);
-	char popFront();
+	void pushBack(Direction dir);
+	char popBack();
 };

@@ -8,38 +8,51 @@ AI::AI(unsigned int tileAmount)
 
 Direction AI::decideMovement(Tile *currentTile)
 {
-	return Direction::size;
+	return D_SIZE;
 }
 
 void AI::calcRoute(Tile *startTile, Tile *endTile)
 {
-	list<Route> *routes;
-	tryAllDirs(startTile, endTile, 0);
+	int cost = tryAllDirs(startTile, endTile, 0);
 }
 
-//requires optimization (faster "handled nodes" check)
 int AI::tryAllDirs(Tile *tile, Tile *endTile, int cost)
 {
-	int costReturn = INT_MAX;
-	handledTiles.push_back(tile);
+	//if the current tile is the end tile we've reached our goal.
 	if(tile == endTile)
 		return cost;
+	bool allVisited = true;
 	//for every direction
-	for(int i = 0; i < Direction::size; i++)
+	for(int i = 0; i < D_SIZE; i++)
 	{
 		//if not null
 		if(tile->checkDirection((Direction)i))
 		{
-			bool found = false;
-			//and not visited
-			for(unsigned int k = 0; k < handledTiles.size(); k++)
-				if(handledTiles.at(k) == tile->checkDirection((Direction)i))
-					found = true;
-			//repeat for next tile
-			costReturn = tryAllDirs(tile->checkDirection((Direction)i),endTile, ++cost);
+			if(!tile->checkDirection((Direction)i)->visited)
+			{
+				tile->checkDirection((Direction)i)->cost = cost + 1;
+				allVisited = false;
+			}
 		}
 	}
-	return 0;
+	//if all are already visited we've reached a dead end.
+	if(allVisited)
+		return INT_MAX;
+
+	//recursively call this function for all unvisited neighbor tiles.
+	for(int i = 0; i < D_SIZE; i++)
+	{
+		if(tile->checkDirection((Direction)i))
+		{
+			//if tile is not visited and has higher cost than this.
+			if(!tile->checkDirection((Direction)i)->visited && tile->checkDirection((Direction)i)->cost > cost + 1)
+			{
+				cost = tryAllDirs(tile->checkDirection((Direction)i),endTile,cost+1);
+				tile->shortestDir = (Direction)i;
+			}
+		}
+	}
+	return cost;
 }
 
 AI::~AI()

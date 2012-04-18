@@ -5,16 +5,16 @@ Route::Route()
 	cost = 0;
 }
 
-void Route::pushBack(char dir)
+void Route::pushBack(Direction dir)
 {
 	route.push_back(dir);
 	cost++;
 }
 
-char Route::popFront()
+char Route::popBack()
 {
-	char temp = route.front();
-	route.pop_front();
+	char temp = route.back();
+	route.pop_back();
 	cost--;
 	return temp;
 }

@@ -4,7 +4,6 @@
 class AI
 {
 protected:
-	Route *route;
 	unsigned int tileAmount;
 	vector<Tile*> handledTiles;
 	//when it sees a player and he is invinsible. Will find a tile far away from tha player and 

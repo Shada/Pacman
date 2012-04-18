@@ -12,6 +12,8 @@ public:
 	Tile(D3DXVECTOR3 pos, D3DXVECTOR2 dim);
 	~Tile();
 	bool visited;
+	int cost;
+	Direction shortestDir;
 
 	void setNeighbours(vector<Tile*> neighbours);
 

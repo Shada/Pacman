@@ -8,7 +8,7 @@ SmartAI::SmartAI(int tileAmount)
 
 Direction SmartAI::decideMovement(Tile *currentTile)
 {
-	return Direction::size;
+	return D_SIZE;
 }
 
 SmartAI::~SmartAI()
