@@ -5,7 +5,7 @@ PolygonGroup::PolygonGroup(string name)
 {
 	this->name = name;
 	bufferIndex = 0;
-	material = new Material((char*)"default");
+	material = NULL;
 }
 
 void PolygonGroup::draw(ID3D10EffectTechnique* tech )
@@ -34,4 +34,5 @@ void PolygonGroup::feedToPData(Vertex* pData)
 
 PolygonGroup::~PolygonGroup()
 {
+	SAFE_DELETE( material );
 }

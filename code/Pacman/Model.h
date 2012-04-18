@@ -25,13 +25,12 @@ public:
 	void draw(ID3D10EffectTechnique* tech);
 
 	void feedData();
-	void createBuffer(ID3D10Device* g_pd3dDevice);
+	void createBuffer();
 
 	string getName()					{ return name;			}
 	int getVertexAmount()				{ return vertexAmount;	}
 	ID3D10Buffer* getBuffer()			{ return g_pVB;			}
 	vector<PolygonGroup> *getGroups()	{ return &groups;		}
 
-	void loadImageData(ID3D10Device* device);
-	void loadAlphaMapData(ID3D10Device* device);
+	void loadImageData();
 };

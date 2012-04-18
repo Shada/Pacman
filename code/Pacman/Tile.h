@@ -15,6 +15,9 @@ public:
 
 	void setNeighbours(vector<Tile*> neighbours);
 
+	D3DXVECTOR3 getPos() { return position; }
+	D3DXVECTOR2 getDim() { return dimensions; }
+
 	// returns the tile you want to go to, if the direction is valid
 	Tile *checkDirection(Direction direction);
 };

@@ -1,9 +1,7 @@
 #pragma once
 #include "KeyListener.h"
-#include "stdafx.h"
 #include "Tile.h"
 #include "Model.h"
-#include "GraphicsManager.h"
 
 class GameObject : KeyListener
 {
@@ -16,7 +14,7 @@ protected:
 
 	ID3D10EffectTechnique* tech;
 public:
-	GameObject(Tile *t);
+	GameObject(Tile *t, D3DXVECTOR3 *pos, ID3D10EffectTechnique* tech, Model *m);
 	~GameObject();
 
 	//if instanced this should not be called. Instead the game
@@ -25,7 +23,9 @@ public:
 
 	//Will first send in the objects worldmatrix to the shader
 	//then call its model's draw()
-	virtual void draw(); 
+	virtual void draw();
+
+	const D3DXVECTOR3 *getPos() { return position; }
 
 	//used for instancing when game will collect all objects it  
 	//wants to draw instanced's worldmatrices.

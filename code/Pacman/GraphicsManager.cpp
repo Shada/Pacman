@@ -13,18 +13,21 @@ GraphicsManager::GraphicsManager(HWND g_hWnd)
 	hWnd = g_hWnd;
 	initDevice();
 }
+
 GraphicsManager* GraphicsManager::createInstance(HWND g_hWnd)
 {
 	if(!_this)
 		_this = new GraphicsManager(g_hWnd);
 	return _this;
 }
+
 GraphicsManager* GraphicsManager::getInstance()
 {
 	if(_this)
 		return _this;
 	else return NULL;
 }
+
 HRESULT GraphicsManager::initDevice()
 {
 	HRESULT hr = S_OK;;
@@ -158,6 +161,19 @@ createDeviceFlags |= D3D10_CREATE_DEVICE_DEBUG;
 	&g_pVertexLayout );
 
 	return S_OK;
+}
+
+void GraphicsManager::createBuffer(int vertexAmount, ID3D10Buffer **g_pVB)
+{
+	D3D10_BUFFER_DESC bd;
+	bd.Usage = D3D10_USAGE_DYNAMIC;
+	bd.ByteWidth = sizeof( Vertex ) * vertexAmount;
+	bd.BindFlags = D3D10_BIND_VERTEX_BUFFER;
+	bd.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
+	bd.MiscFlags = 0;
+
+	if( FAILED( g_pd3dDevice->CreateBuffer( &bd, 0, g_pVB ) ) )
+		MessageBox( 0, "Unable to create Vertex Buffer", "VB Error", 0 );
 }
 
 void GraphicsManager::useBuffer(ID3D10Buffer* vB)

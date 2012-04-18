@@ -2,9 +2,8 @@
 
 
 Ghost::Ghost(D3DXVECTOR3 *pos, AI *aiType, Tile *t)
-	: GameObject(t)
+	: GameObject(t, pos, NULL, NULL)
 {
-	this->position = pos;
 	ai = aiType;
 	dead = false;
 }

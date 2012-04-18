@@ -1,20 +1,20 @@
 #include "GameObject.h"
 
 
-GameObject::GameObject(Tile *t)
+GameObject::GameObject(Tile *t, D3DXVECTOR3 *pos, ID3D10EffectTechnique* tech, Model *m)
 	: KeyListener()
 {
-	model = NULL;
-	tech = NULL;
-	position = NULL;
-	currentTile = t;
+	this->model = m;
+	this->tech = tech;
+	this->position = pos;
+	this->currentTile = t;
 }
+
 void GameObject::draw()
 {
 	GraphicsManager::getInstance()->useWorldMatrix(mWorld);
 	model->draw(tech);
 }
-
 
 GameObject::~GameObject()
 {

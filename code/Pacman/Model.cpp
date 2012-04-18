@@ -33,17 +33,9 @@ void Model::feedData()
 	vertexAmount += groups.back().getVertexAmount();
 }
 
-void Model::createBuffer(ID3D10Device* g_pd3dDevice)
+void Model::createBuffer()
 {
-	D3D10_BUFFER_DESC bd;
-	bd.Usage = D3D10_USAGE_DYNAMIC;
-	bd.ByteWidth = sizeof( Vertex ) * getVertexAmount();
-	bd.BindFlags = D3D10_BIND_VERTEX_BUFFER;
-	bd.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
-	bd.MiscFlags = 0;
-
-	if( FAILED( g_pd3dDevice->CreateBuffer( &bd, 0, &g_pVB ) ) )
-		MessageBox( 0, "Unable to create Vertex Buffer", "VB Error", 0 );
+	GraphicsManager::getInstance()->createBuffer(getVertexAmount(), &g_pVB);
 
 	createPData();
 }
@@ -59,15 +51,13 @@ void Model::createPData()
 	g_pVB->Unmap();
 }
 
-void Model::loadImageData(ID3D10Device* device)
+void Model::loadImageData()
 {
 	for(unsigned int i = 0; i < groups.size(); i++)
-		groups.at(i).material->loadImageData(device);
-}
-void Model::loadAlphaMapData(ID3D10Device* device)
-{
-	for(unsigned int i = 0; i < groups.size(); i++)
-		groups.at(i).material->loadAlphaMap(device);
+	{
+		groups.at(i).material->loadImageData();
+		groups.at(i).material->loadAlphaMap();
+	}
 }
 
 Model::~Model()

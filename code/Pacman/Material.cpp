@@ -1,5 +1,5 @@
 #include "Material.h"
-
+#include "GraphicsManager.h"
 
 Material::Material(string name)
 {
@@ -16,18 +16,22 @@ Material::Material(string name)
 	g_pAlphaResource		= NULL;
 }
 
-void Material::loadImageData(ID3D10Device* g_pd3dDevice)
+void Material::loadImageData()
 {
+	ID3D10Device* device = GraphicsManager::getInstance()->getDevice();
+
 	//Load image, if the image cannot be found, the defaulttexture will be loaded instead
-	if(FAILED(D3DX10CreateShaderResourceViewFromFile(g_pd3dDevice, textureFileName.c_str(), NULL, NULL, &g_pTextureResource, NULL)))
-		if(FAILED(D3DX10CreateShaderResourceViewFromFile(g_pd3dDevice, "Images/default.png", NULL, NULL, &g_pTextureResource, NULL)))
+	if(FAILED(D3DX10CreateShaderResourceViewFromFile(device, textureFileName.c_str(), NULL, NULL, &g_pTextureResource, NULL)))
+		if(FAILED(D3DX10CreateShaderResourceViewFromFile(device, "Images/default.png", NULL, NULL, &g_pTextureResource, NULL)))
 			MessageBox(0, "Failed to create shader resource in Material ", "SR Error", 0);
 }
-void Material::loadAlphaMap(ID3D10Device* g_pd3dDevice)
+void Material::loadAlphaMap()
 {
+	ID3D10Device* device = GraphicsManager::getInstance()->getDevice();
+
 	//load alpha-map, if the image cannot be found, the defaultalphamap will be loaded instead
-	if(FAILED(D3DX10CreateShaderResourceViewFromFile(g_pd3dDevice, alphaMapFileName.c_str(), NULL, NULL, &g_pAlphaResource, NULL)))
-		if(FAILED(D3DX10CreateShaderResourceViewFromFile(g_pd3dDevice, "Images/DefaultAlpha.jpg", NULL, NULL, &g_pAlphaResource, NULL)))
+	if(FAILED(D3DX10CreateShaderResourceViewFromFile(device, alphaMapFileName.c_str(), NULL, NULL, &g_pAlphaResource, NULL)))
+		if(FAILED(D3DX10CreateShaderResourceViewFromFile(device, "Images/DefaultAlpha.jpg", NULL, NULL, &g_pAlphaResource, NULL)))
 			MessageBox(0, "Failed to create shader resource in Material ", "SR Error", 0);
 }
 

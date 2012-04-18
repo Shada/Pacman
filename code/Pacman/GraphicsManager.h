@@ -48,7 +48,9 @@ public:
 
 	void resetBlendState();
 
-	const ID3D10Device* getDevice() { return g_pd3dDevice; }
+	void createBuffer(int vertexAmount, ID3D10Buffer **g_pVB);
+
+	ID3D10Device* getDevice() { return g_pd3dDevice; }
 	//could not be const
 	ID3D10Effect* getEffect()		{ return g_pEffect;    }
 

@@ -7,8 +7,6 @@ LevelReader::LevelReader()
 	yellow.r = 255; yellow.g = 210; yellow.b = 0;
 	blue.r = blue.g = 0; blue.b = 255;
 	green.r = green.b = 0; green.g = 255;
-
-	readFile("map.raw", 60, 60);
 }
 
 vector<Tile*> LevelReader::readFile(char* filename, const int _width, const int _height)
@@ -42,7 +40,7 @@ vector<Tile*> LevelReader::readFile(char* filename, const int _width, const int 
 void LevelReader::createTiles()
 {
 	D3DXVECTOR2 dim(10, 10);
-	D3DXVECTOR3 pos(0, 0, 0);
+	D3DXVECTOR3 pos(5, 0, 5);
 
 	for(int i = 1; i < width - 1; i += 3)
 		for(int j = 1; j < height - 1; j += 3)

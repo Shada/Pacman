@@ -1,5 +1,6 @@
 #pragma once
 #include "stdafx.h"
+
 class Material
 {
 	friend class MtlReader;
@@ -19,8 +20,8 @@ public:
 
 	D3DXVECTOR3 ka, kd, ks;
 
-	void loadImageData(ID3D10Device* g_pd3dDevice);
-	void loadAlphaMap(ID3D10Device* g_pd3dDevice);
+	void loadImageData();
+	void loadAlphaMap();
 
 	void setTexture(string textureFileName)		{ this->textureFileName = textureFileName; }
 	void setAlphaMap(string alphaMapFileName)	{ this->alphaMapFileName = alphaMapFileName; }
