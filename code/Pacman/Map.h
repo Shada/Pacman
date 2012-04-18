@@ -1,13 +1,13 @@
 #pragma once
-#include "Tile.h"
-#include "stdafx.h"
+
 #include "ObjReader.h"
-//#include "GameObject"
+#include "GameObject.h"
+#include "LevelReader.h"
 
 class Map
 {
 private:
-	//vector<GameObject*> objects;
+	vector<GameObject*> objects;
 	vector<Tile*> tiles;
 	ObjReader *objReader;
 	Model *floor;

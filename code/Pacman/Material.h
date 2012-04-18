@@ -1,6 +1,5 @@
 #pragma once
 #include "stdafx.h"
-#include "GraphicsManager.h"
 class Material
 {
 	friend class MtlReader;

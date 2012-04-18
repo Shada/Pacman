@@ -20,8 +20,6 @@ private:
 	ID3D10DepthStencilView *g_pDepthStencilView;
 	
 	ID3D10Effect *g_pEffect;
-
-	
 	
 	//Instance of self (Singleton)
 	static GraphicsManager* _this;

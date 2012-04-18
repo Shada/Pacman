@@ -4,6 +4,10 @@
 LevelReader::LevelReader()
 {
 	black.r = black.g = black.b = 0;
+	yellow.r = 255; yellow.g = 210; yellow.b = 0;
+	blue.r = blue.g = 0; blue.b = 255;
+	green.r = green.b = 0; green.g = 255;
+
 	readFile("map.raw", 60, 60);
 }
 
@@ -32,7 +36,6 @@ vector<Tile*> LevelReader::readFile(char* filename, const int _width, const int 
 
 	createTiles();
 
-
 	return tiles;
 }
 
@@ -52,35 +55,32 @@ void LevelReader::createTiles()
 		int x, y;
 		x = i % (width / 3);
 		y = (int)(i / (width / 3));
-
-		int px, py;
-		px = x * 3 + 1;
-		py = y * 3 + 1;
-
-		mapTiles(px, py, i);
+		mapTiles(x, y, i);
 	}
 }
 
-void LevelReader::mapTiles(int px, int py, int tileIndex)
+void LevelReader::mapTiles(int x, int y, int tileIndex)
 {
 	vector<Tile*> neighbours(4);
 
-	int tileX = (px - 1) / 3;
-	int tileY = (py - 1) / 3;
+	int px, py;
+	px = x * 3 + 1;
+	py = y * 3 + 1;
 
 	int nTilesX = width / 3;
-	
+	int nTilesY = height / 3;
+
 	if(pixelData[px][py - 1] != black)	
-		neighbours.at(0) = tiles.at(tileY - 1 < 0 ? width - tileIndex - 1 : tileIndex - nTilesX);
+		neighbours.at(0) = tiles.at(y - 1 < 0 ? width - tileIndex - 1 : tileIndex - nTilesX);
 
 	if(pixelData[px][py + 1] != black)
-		neighbours.at(1) = tiles.at(tileY + 1 >= height / 3 ? width - tileIndex - 1 : tileIndex + nTilesX);
+		neighbours.at(1) = tiles.at(y + 1 >= nTilesY ? width - tileIndex - 1 : tileIndex + nTilesX);
 
 	if(pixelData[px + 1][py] != black)
-		neighbours.at(2) = tiles.at(tileX + 1 >= nTilesX ? tileIndex - nTilesX + 1 : tileIndex + 1);
+		neighbours.at(2) = tiles.at(x + 1 >= nTilesX ? tileIndex - nTilesX + 1 : tileIndex + 1);
 
 	if(pixelData[px - 1][py] != black)
-		neighbours.at(3) = tiles.at(tileX - 1 < 0 ? tileIndex + nTilesX - 1 : tileIndex - 1);
+		neighbours.at(3) = tiles.at(x - 1 < 0 ? tileIndex + nTilesX - 1 : tileIndex - 1);
 
 	tiles.at(tileIndex)->setNeighbours(neighbours);
 }

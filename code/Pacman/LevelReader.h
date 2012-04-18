@@ -19,14 +19,14 @@ struct Pixel
 class LevelReader
 {
 private:
-	Pixel black;
+	Pixel black, yellow, blue, green;
 	vector<vector<Pixel>> pixelData;
 	vector<Tile*> tiles;
 
 	int height, width;
 
 	void createTiles();
-	void mapTiles(int px, int py, int tileIndex);
+	void mapTiles(int x, int y, int tileIndex);
 public:
 	LevelReader();
 	~LevelReader();

@@ -76,6 +76,7 @@
     <ClCompile Include="HighScore.cpp" />
     <ClCompile Include="KeyListener.cpp" />
     <ClCompile Include="KeyManager.cpp" />
+    <ClCompile Include="LevelReader.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Material.cpp" />
@@ -83,6 +84,7 @@
     <ClCompile Include="MtlReader.cpp" />
     <ClCompile Include="ObjReader.cpp" />
     <ClCompile Include="PolygonGroup.cpp" />
+    <ClCompile Include="Route.cpp" />
     <ClCompile Include="SimpleAI.cpp" />
     <ClCompile Include="SmartAI.cpp" />
     <ClCompile Include="Tile.cpp" />
@@ -99,12 +101,14 @@
     <ClInclude Include="HighScore.h" />
     <ClInclude Include="KeyListener.h" />
     <ClInclude Include="KeyManager.h" />
+    <ClInclude Include="LevelReader.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="MtlReader.h" />
     <ClInclude Include="ObjReader.h" />
     <ClInclude Include="PolygonGroup.h" />
+    <ClInclude Include="Route.h" />
     <ClInclude Include="SimpleAI.h" />
     <ClInclude Include="SmartAI.h" />
     <ClInclude Include="stdafx.h" />
@@ -112,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader.fx" />
+    <None Include="Shader.fxo" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

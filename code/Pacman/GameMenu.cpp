@@ -51,7 +51,7 @@ void GameMenu::draw()
 	if(m)
 	{
 		//m->useBuffer(vB);
-		m->render();
+		
 		for(unsigned int i = 0; i < buttons.size(); i++)
 			buttons.at(i)->draw();
 	}
