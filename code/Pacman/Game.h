@@ -3,6 +3,17 @@
 #include "GraphicsManager.h"
 #include "GameMenu.h"
 #include "KeyManager.h"
+
+/////////////////////////////////////
+//for testing should not be in here//
+/////////////////////////////////////
+#include "EffectList.h"
+#include "BlueEffect.h"
+#include "YellowEffect.h"
+/////////////////////////////////////
+//           end testing           //
+/////////////////////////////////////
+
 class Game
 {
 private:
@@ -15,12 +26,17 @@ private:
 	//sets the buttons asociated with either Main menu or ingame menu.
 	void createMainMenu();
 	void createIngameMenu();
+	
+
+	EffectList list;
 
 	Game();
 public:
 	~Game();
 	static Game *getInstance();
 
+	void showLeaderboard();
+	void newGame();
 	void update(double time);
 	void draw(double time);
 };

@@ -30,11 +30,10 @@ public:
 
 	//Used to set the first button in the menu to selected so 
 	//that a button is selected before the user has changed it.
-	//The first button to be pushed in is the last element in the vector.
 	void setFirstSelected()
 	{
 		if(buttons.size() > 0)
-			buttons.at(buttons.size()-1)->setSelected();
+			buttons.at(0)->setSelected();
 	}
 	void handleKeyStrokes(int key);
 	void draw();
