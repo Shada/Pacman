@@ -226,6 +226,17 @@ void GraphicsManager::render(ID3D10EffectTechnique* tech, int bufferIndex, int n
 	}
 }
 
+void GraphicsManager::renderInstanced(ID3D10EffectTechnique* tech, int instanceCount, int bufferIndex, int numberOfVertices)
+{
+	D3D10_TECHNIQUE_DESC techDesc;
+	tech->GetDesc( &techDesc );
+	for( UINT p = 0; p < techDesc.Passes; p++ )
+	{
+		tech->GetPassByIndex( p )->Apply(0);
+		g_pd3dDevice->DrawInstanced(numberOfVertices,instanceCount,bufferIndex,0);
+	}
+}
+
 void GraphicsManager::clearRenderTarget()
 {
 	//clear render target

@@ -36,7 +36,12 @@ public:
 	void clearRenderTarget();
 	//switch backbuffer
 	void swapChain();
+
+	//remember to call all the use functions needed before calling this one
+	//render() should be called from the object itself, while the renderInstanced()
+	//should be called from the class that holds all objects that are to be drawed.
 	void render(ID3D10EffectTechnique* tech, int bufferIndex, int numberOfVertices);
+	void renderInstanced(ID3D10EffectTechnique* tech,int instanceCount, int bufferIndex, int numberOfVertices);
 	
 
 	void useMaterial(Material* mat);
