@@ -5,8 +5,8 @@ class BluePill :
 	public Pill
 {
 public:
-	BluePill(void);
-	~BluePill(void);
+	BluePill(Tile* t, D3DXVECTOR3 *pos,ID3D10EffectTechnique* tech, Model* m);
+	~BluePill();
 
 	BuffEffect* getEffect();
 };

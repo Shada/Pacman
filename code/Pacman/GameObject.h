@@ -24,6 +24,7 @@ public:
 	//Will first send in the objects worldmatrix to the shader
 	//then call its model's draw()
 	virtual void draw();
+	virtual void update(float dt);
 
 	const D3DXVECTOR3 *getPos() { return position; }
 

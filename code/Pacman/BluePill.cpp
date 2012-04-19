@@ -1,8 +1,8 @@
 #include "BluePill.h"
 
 
-BluePill::BluePill()
-	:Pill()
+BluePill::BluePill(Tile* t, D3DXVECTOR3 *pos,ID3D10EffectTechnique* tech, Model* m)
+	:Pill(t, pos, tech, m)
 {
 	color = D3DXCOLOR(0,0,255,255);
 }

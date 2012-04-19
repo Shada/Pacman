@@ -9,7 +9,10 @@ GameObject::GameObject(Tile *t, D3DXVECTOR3 *pos, ID3D10EffectTechnique* tech, M
 	this->position = pos;
 	this->currentTile = t;
 }
+void GameObject::update(float dt)
+{
 
+}
 void GameObject::draw()
 {
 	GraphicsManager::getInstance()->useWorldMatrix(mWorld);
