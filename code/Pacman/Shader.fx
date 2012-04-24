@@ -21,7 +21,8 @@ cbuffer cbEveryFrame
 	float time;
 
 	matrix mWorld;
-	matrix mWorldViewProjection;	
+	matrix mWorldViewProjection;
+	matrix mProjection;	
 	matrix mWorldView;
 	matrix mView;
 };
@@ -61,10 +62,10 @@ RasterizerState frontFaceCulling
 PSSceneIn VSScene(VSSceneIn input)
 {
 	PSSceneIn output = (PSSceneIn)0;
+	mWorldView = mul(mWorld, mView);
+	mWorldViewProjection = mul(mWorldView, mProjection);
+
 	output.pos = mul( float4(input.pos, 1.0), mWorldViewProjection );
-	float3 tnorm = normalize(mul(input.norm, mWorldView));
-	float4 eyeCoords = mul(float4(input.pos, 1.0), mWorldView);
-	float3 cameraPos = mul(CameraPos, mView);
 
 	return output;
 };
@@ -82,7 +83,7 @@ technique10 DrawScene
         SetGeometryShader( NULL );
         SetPixelShader( CompileShader( ps_4_0, PSScene() ) );
 	    
-	    SetRasterizerState( backFaceCulling );
+	    SetRasterizerState( NoCulling );
 	    SetDepthStencilState( EnableDepth, 0 );
     }  
 }

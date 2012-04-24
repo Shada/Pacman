@@ -3,9 +3,9 @@
 
 Camera::Camera()
 {
-	vEyePt		= D3DXVECTOR3	( 0,  0, 0 );
+	vEyePt		= D3DXVECTOR3	( 0,  100, 0 );
 	vLookAtPt	= D3DXVECTOR3	( 0, 0, 0 );
-	vUp			= D3DXVECTOR3	( 0, 1, 0 );
+	vUp			= D3DXVECTOR3	( 0, 0, 1 );
 	vDistance	= D3DXVECTOR3	( 0, -7, 15 );
 	vDesiredPt	= D3DXVECTOR3	( 0,  10, -20 );
 	
@@ -20,7 +20,7 @@ Camera::Camera()
 
 void Camera::update(D3DXVECTOR3 pos, double dt)
 {
-	vEyePt.z -= 0.05f;
+	//vEyePt.z -= 0.05f;
 
 	//vEyePt = pos / 2;
 	D3DXMatrixLookAtLH( mView, &vEyePt, &vLookAtPt, &vUp );

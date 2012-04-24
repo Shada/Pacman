@@ -7,11 +7,14 @@ Game::Game()
 	menu = NULL;
 	createMainMenu();
 
+	cam = new Camera();
+
 	keyManager = new KeyManager();
 	keyManager->attach((KeyListener*)menu);
 
 	list.addEffect(new YellowEffect());
 	list.addEffect(new BlueEffect());
+	map = NULL;
 }
 
 Game *Game::getInstance()
@@ -25,6 +28,8 @@ Game *Game::getInstance()
 void Game::update(double time)
 {
 	keyManager->update(time);
+	cam->update(D3DXVECTOR3(0, 0, 0),time);
+	GraphicsManager::getInstance()->useViewAndProjection(cam->getViewMatrix(), cam->getProjMatrix());
 
 
 	list.update(time);
@@ -33,11 +38,12 @@ void Game::update(double time)
 void Game::draw(double time)
 {
 	menu->draw();
+	if (map)
+		map->draw();
 }
 void Game::newGame()
 {
-	int koko;
-	koko = 0;
+	map = new Map();
 }
 void Game::showLeaderboard()
 {
@@ -66,5 +72,8 @@ void Game::createIngameMenu()
 Game::~Game()
 {
 	SAFE_DELETE(menu);
+
 	SAFE_DELETE(keyManager);
+	SAFE_DELETE( map );
+	SAFE_DELETE( cam );
 }

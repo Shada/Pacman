@@ -237,6 +237,12 @@ void GraphicsManager::renderInstanced(ID3D10EffectTechnique* tech, int instanceC
 	}
 }
 
+void GraphicsManager::useViewAndProjection(const D3DXMATRIX *mView, const D3DXMATRIX *mProj)
+{
+	g_pEffect->GetVariableByName( "mProjection" )->AsMatrix()->SetMatrix( (float*)mProj );
+	g_pEffect->GetVariableByName( "mView" )->AsMatrix()->SetMatrix( (float*)mView );
+}
+
 void GraphicsManager::clearRenderTarget()
 {
 	//clear render target

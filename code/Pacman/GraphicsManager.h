@@ -48,11 +48,14 @@ public:
 
 	void useBuffer(ID3D10Buffer* vB);
 	void useWorldMatrix(D3DXMATRIX m);
+
 	//used when using instancing
 	void useWorldMatrices(const D3DXMATRIX m[], int size);
 
-	void resetBlendState();
+	// Send in variables to the shader
+	void useViewAndProjection(const D3DXMATRIX *mView, const D3DXMATRIX *mProj);
 
+	void resetBlendState();
 	void createBuffer(int vertexAmount, ID3D10Buffer **g_pVB);
 
 	ID3D10Device* getDevice() { return g_pd3dDevice; }

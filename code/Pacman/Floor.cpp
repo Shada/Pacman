@@ -3,6 +3,9 @@
 
 Floor::Floor(D3DXVECTOR3 *startPos, D3DXVECTOR2 dimensions)
 {
+
+	D3DXMatrixIdentity(&mWorld);
+
 	model = new Model("Floor");
 
 	vector<PolygonGroup> *poly = model->getGroups();
@@ -58,6 +61,7 @@ Floor::Floor(D3DXVECTOR3 *startPos, D3DXVECTOR2 dimensions)
 
 void Floor::draw()
 {
+	GraphicsManager::getInstance()->useWorldMatrix(mWorld);
 	model->draw(GraphicsManager::getInstance()->g_pTechRender);
 }
 
