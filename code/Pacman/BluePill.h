@@ -1,13 +1,13 @@
 #pragma once
-#include "pill.h"
+#include "Pill.h"
 #include "BlueEffect.h"
+
 class BluePill :
 	public Pill
 {
 public:
-	BluePill(Tile* t, D3DXVECTOR3 *pos,ID3D10EffectTechnique* tech, Model* m);
+	BluePill(Tile* t, ID3D10EffectTechnique* tech, Model* m);
 	~BluePill();
 
 	BuffEffect* getEffect();
 };
-

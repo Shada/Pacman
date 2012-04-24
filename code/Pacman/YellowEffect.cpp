@@ -2,12 +2,12 @@
 
 
 YellowEffect::YellowEffect()
-	: BuffEffect()
+	: BuffEffect(100)
 {
 	counter = 1.0f;
 }
 
-void YellowEffect::update(float dt)
+void YellowEffect::update(double dt)
 {
 	//give points to owner and/or decrease number of total
 	//yellowpills left

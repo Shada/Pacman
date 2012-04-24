@@ -18,7 +18,7 @@ private:
 	//determines how the ghost will behave 
 	AI* ai;
 public:
-	Ghost(D3DXVECTOR3 *pos, AI *aiType, Tile *t);
+	Ghost(AI *aiType, Tile *t);
 	~Ghost();
 
 	void draw();

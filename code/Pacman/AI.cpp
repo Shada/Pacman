@@ -4,6 +4,7 @@
 AI::AI(unsigned int tileAmount)
 {
 	this->tileAmount = tileAmount;
+	handledTiles = vector<Tile*>();
 }
 
 Direction AI::decideMovement(Tile *currentTile)

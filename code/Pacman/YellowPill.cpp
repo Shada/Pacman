@@ -1,8 +1,8 @@
 #include "YellowPill.h"
 
 
-YellowPill::YellowPill(Tile* t, D3DXVECTOR3 *pos,ID3D10EffectTechnique* tech, Model* m)
-	:Pill(t, pos, tech, model)
+YellowPill::YellowPill(Tile* t, ID3D10EffectTechnique* tech, Model* m)
+	:Pill(t, tech, model)
 {
 	color = D3DXCOLOR(255,242,0,255);
 }

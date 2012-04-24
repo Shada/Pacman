@@ -1,8 +1,8 @@
 #include "Ghost.h"
 
 
-Ghost::Ghost(D3DXVECTOR3 *pos, AI *aiType, Tile *t)
-	: GameObject(t, pos, NULL, NULL)
+Ghost::Ghost(AI *aiType, Tile *t)
+	: GameObject(t, NULL, NULL)
 {
 	ai = aiType;
 	dead = false;
@@ -33,4 +33,5 @@ void Ghost::draw()
 
 Ghost::~Ghost()
 {
+	SAFE_DELETE( ai );
 }

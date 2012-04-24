@@ -68,6 +68,12 @@
   <ItemGroup>
     <ClCompile Include="AI.cpp" />
     <ClCompile Include="AverageAI.cpp" />
+    <ClCompile Include="BlueEffect.cpp" />
+    <ClCompile Include="BluePill.cpp" />
+    <ClCompile Include="BuffEffect.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="EffectList.cpp" />
+    <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMenu.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -83,15 +89,25 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="MtlReader.cpp" />
     <ClCompile Include="ObjReader.cpp" />
+    <ClCompile Include="Pill.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PolygonGroup.cpp" />
     <ClCompile Include="Route.cpp" />
     <ClCompile Include="SimpleAI.cpp" />
     <ClCompile Include="SmartAI.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="YellowEffect.cpp" />
+    <ClCompile Include="YellowPill.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AI.h" />
     <ClInclude Include="AverageAI.h" />
+    <ClInclude Include="BlueEffect.h" />
+    <ClInclude Include="BluePill.h" />
+    <ClInclude Include="BuffEffect.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="EffectList.h" />
+    <ClInclude Include="Floor.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameButton.h" />
     <ClInclude Include="GameMenu.h" />
@@ -107,12 +123,16 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="MtlReader.h" />
     <ClInclude Include="ObjReader.h" />
+    <ClInclude Include="Pill.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="PolygonGroup.h" />
     <ClInclude Include="Route.h" />
     <ClInclude Include="SimpleAI.h" />
     <ClInclude Include="SmartAI.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="YellowEffect.h" />
+    <ClInclude Include="YellowPill.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader.fx" />

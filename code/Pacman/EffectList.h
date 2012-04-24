@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "BuffEffect.h"
+
 class EffectList
 {
 private:
@@ -9,10 +10,9 @@ public:
 	EffectList();
 	~EffectList();
 
-	void update(float dt);
+	void update(double dt);
 
 	//could perhaps check if that effect already exist and if so
 	//replace it with the new one instead of just adding it
 	void addEffect(BuffEffect* effect);
 };
-

@@ -17,18 +17,18 @@ void KeyManager::attach(KeyListener* listener)
 }
 void KeyManager::detach(KeyListener* listener)
 {
-	for(int i = 0; i < subscribers.size(); i++)
+	for(unsigned int i = 0; i < subscribers.size(); i++)
 		if(subscribers.at(i) == listener)
 			subscribers.erase(subscribers.begin() + i);
 }
 void KeyManager::notify(int key)
 {
-	for(int i = 0; i < subscribers.size(); i++)
+	for(unsigned int i = 0; i < subscribers.size(); i++)
 		subscribers.at(i)->handleKeyStrokes(key);
 }
-void KeyManager::update(float dt)
+void KeyManager::update(double dt)
 {
-	for(int i= 0; i < usedkeys.size(); i++)
+	for(unsigned int i= 0; i < usedkeys.size(); i++)
 	{
 		SHORT ks = GetKeyState(usedkeys.at(i));
 		//NOT BOOL!!! SHORT!!!!!

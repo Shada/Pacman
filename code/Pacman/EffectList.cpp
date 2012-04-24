@@ -5,11 +5,11 @@ EffectList::EffectList()
 {
 }
 
-void EffectList::update(float dt)
+void EffectList::update(double dt)
 {
 	for(unsigned int i = 0; i < list.size(); i++)
 	{
-		const float test = list.at(i)->getCounter();
+		const double test = list.at(i)->getCounter();
 		if( list.at(i)->getCounter() > 0 )
 			list.at(i)->update(dt);
 		else
@@ -24,6 +24,7 @@ void EffectList::addEffect(BuffEffect* effect)
 {
 	list.push_back(effect);
 }
+
 EffectList::~EffectList()
 {
 	for(unsigned int i = 0; i < list.size(); i++)

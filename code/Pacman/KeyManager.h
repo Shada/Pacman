@@ -17,7 +17,7 @@ public:
 	void detach(KeyListener* listener);
 	
 	
-	void update(float dt);
+	void update(double dt);
 	~KeyManager();
 };
 

@@ -1,11 +1,14 @@
 #pragma once
 #include "stdafx.h"
 
+class Pill;
 class Tile
 {
 private:
 	D3DXVECTOR3 position;
 	D3DXVECTOR2 dimensions;
+
+	Pill *pill;
 
 	vector<Tile*> neighbouringTiles;
 public:
@@ -16,7 +19,9 @@ public:
 	Direction shortestDir;
 
 	void setNeighbours(vector<Tile*> neighbours);
+	void setPill(Pill *p) { pill = p; }
 
+	Pill *getPill() { return pill; }
 	D3DXVECTOR3 getPos() { return position; }
 	D3DXVECTOR2 getDim() { return dimensions; }
 

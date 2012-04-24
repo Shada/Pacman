@@ -1,6 +1,12 @@
 #pragma once
-#include "stdafx.h"
-#include "Tile.h"
+#include "YellowPill.h"
+#include "BluePill.h"
+#include "Model.h"
+
+#include "Ghost.h"
+#include "AverageAI.h"
+#include "SmartAI.h"
+#include "SimpleAI.h"
 
 struct Pixel
 {
@@ -19,17 +25,25 @@ struct Pixel
 class LevelReader
 {
 private:
-	Pixel black, yellow, blue, green;
+	Pixel black, yellow, blue, green, white;
 	vector<vector<Pixel>> pixelData;
 	vector<Tile*> tiles;
 
-	int height, width;
+	int height, width, nTilesX, nTilesY;
+
+	Model *m;
+	vector<Ghost*> ghosts;
 
 	void createTiles();
 	void mapTiles(int x, int y, int tileIndex);
+	void placePillsAndGhosts();
+
+	AI *chooseAIType(Pixel data);
 public:
 	LevelReader();
 	~LevelReader();
+
+	vector<Ghost*> getGhosts() { return ghosts; }
 
 	vector<Tile*> readFile(char* filename, const int _width, const int _height);
 };

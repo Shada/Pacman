@@ -7,6 +7,9 @@ LevelReader::LevelReader()
 	yellow.r = 255; yellow.g = 210; yellow.b = 0;
 	blue.r = blue.g = 0; blue.b = 255;
 	green.r = green.b = 0; green.g = 255;
+	white.r = white.g = white.b = 255;
+
+	ghosts = vector<Ghost*>();
 }
 
 vector<Tile*> LevelReader::readFile(char* filename, const int _width, const int _height)
@@ -14,6 +17,10 @@ vector<Tile*> LevelReader::readFile(char* filename, const int _width, const int 
 	height = _height;
 	width = _width;
 
+	nTilesX = width / 3;
+	nTilesY = height / 3;
+
+	tiles = vector<Tile*>();
 	pixelData.resize(width);
 	for (int i = 0; i < width; ++i)
 		pixelData[i].resize(height);
@@ -34,6 +41,8 @@ vector<Tile*> LevelReader::readFile(char* filename, const int _width, const int 
 
 	createTiles();
 
+	placePillsAndGhosts();
+
 	return tiles;
 }
 
@@ -53,6 +62,7 @@ void LevelReader::createTiles()
 		int x, y;
 		x = i % (width / 3);
 		y = (int)(i / (width / 3));
+
 		mapTiles(x, y, i);
 	}
 }
@@ -65,8 +75,8 @@ void LevelReader::mapTiles(int x, int y, int tileIndex)
 	px = x * 3 + 1;
 	py = y * 3 + 1;
 
-	int nTilesX = width / 3;
-	int nTilesY = height / 3;
+	// if x + 1 or y + 1 is either less than 0 or greater than width/height, then the neightboring tile is on the
+	// other side of the map, i.e exit the map to the right, reapper on the left
 
 	if(pixelData[px][py - 1] != black)	
 		neighbours.at(0) = tiles.at(y - 1 < 0 ? width - tileIndex - 1 : tileIndex - nTilesX);
@@ -83,6 +93,43 @@ void LevelReader::mapTiles(int x, int y, int tileIndex)
 	tiles.at(tileIndex)->setNeighbours(neighbours);
 }
 
+void LevelReader::placePillsAndGhosts()
+{
+	ID3D10EffectTechnique *tech = GraphicsManager::getInstance()->g_pTechRender;
+	m = new Model("");
+	for(unsigned int i = 0; i < tiles.size(); i++)
+	{
+		int x, y;
+		x = i % (width / 3) * 3 + 1;
+		y = (int)(i / (width / 3) * 3 + 1);
+
+		D3DXVECTOR3 pos = tiles.at(i)->getPos();
+
+		if(pixelData[x][y] == yellow)
+			tiles.at(i)->setPill(new YellowPill(tiles.at(i), tech, m));
+
+		else if(pixelData[x][y] == blue)
+			tiles.at(i)->setPill(new BluePill(tiles.at(i), tech, m));
+
+		else if(pixelData[x][y] != white && pixelData[x][y].g == 255)
+			ghosts.push_back(new Ghost(chooseAIType(pixelData[x][y]),tiles.at(i)));
+	}
+}
+
+AI *LevelReader::chooseAIType(Pixel data)
+{
+	AI *ai;
+	if(data.r == 0)
+		ai = new SimpleAI(0);
+	else if (data.r == 1)
+		ai = new AverageAI(0);
+	else if (data.r == 2)
+		ai = new SmartAI(0);
+	 
+	return ai;
+}
+
 LevelReader::~LevelReader()
 {
+	SAFE_DELETE( m );
 }

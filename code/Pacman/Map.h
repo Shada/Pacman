@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "LevelReader.h"
 #include "Floor.h"
+#include "Ghost.h"
 
 class Map
 {
@@ -14,6 +15,7 @@ private:
 	ObjReader *objReader;
 	Model *wall;
 	Floor *floor;
+	vector<Ghost*> ghosts;
 
 	void generateWalls();
 	void generatePills();

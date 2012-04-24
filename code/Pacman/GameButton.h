@@ -24,10 +24,10 @@ public:
 		m->createFont(&font,16,"Verdana");
 		m->createSprite(&sprite);
 
-		rect.top	= _pos.y; 
-		rect.bottom = _pos.y + 16;
-		rect.left   = _pos.x;
-		rect.right  = _pos.x + 300;
+		rect.top	= (long)_pos.y; 
+		rect.bottom = (long)_pos.y + 16;
+		rect.left   = (long)_pos.x;
+		rect.right  = (long)_pos.x + 300;
 
 
 		color = D3DXCOLOR(0.324f, 0.027f, 0.027f, 1.0f);

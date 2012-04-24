@@ -1,11 +1,11 @@
 #pragma once
 #include "BuffEffect.h"
+
 class YellowEffect : public BuffEffect
 {
 public:
-	YellowEffect(void);
-	~YellowEffect(void);
+	YellowEffect();
+	~YellowEffect();
 
-	void update(float dt);
+	void update(double dt);
 };
-

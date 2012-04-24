@@ -9,12 +9,13 @@ protected:
 	Model* model;
 	Tile *currentTile;
 
-	D3DXVECTOR3 *position;
+	D3DXVECTOR3 position;
 	D3DXMATRIX mWorld;
 
 	ID3D10EffectTechnique* tech;
 public:
-	GameObject(Tile *t, D3DXVECTOR3 *pos, ID3D10EffectTechnique* tech, Model *m);
+	GameObject(Tile *t, ID3D10EffectTechnique* tech, Model *m);
+	GameObject(Tile *t, ID3D10EffectTechnique* tech, Model *m, D3DXVECTOR3 pos);
 	~GameObject();
 
 	//if instanced this should not be called. Instead the game
@@ -26,7 +27,7 @@ public:
 	virtual void draw();
 	virtual void update(float dt);
 
-	const D3DXVECTOR3 *getPos() { return position; }
+	const D3DXVECTOR3 getPos() { return position; }
 
 	//used for instancing when game will collect all objects it  
 	//wants to draw instanced's worldmatrices.
