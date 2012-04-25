@@ -28,8 +28,6 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
 	graphicsManager = GraphicsManager::createInstance(hWnd);
 
-	if( FAILED( graphicsManager->initDevice()))
-		return 0;
 	graphicsManager->clearRenderTarget();
 	game = Game::getInstance();
 	
@@ -54,7 +52,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 			TranslateMessage( &msg );
 			DispatchMessage( &msg );
 		}
-		else if(time >= (1.f / 60.f))
+		else if(time >= (1.f / 6000.f))
 		{
 			
 			if(GetActiveWindow() == hWnd)

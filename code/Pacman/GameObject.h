@@ -10,12 +10,12 @@ protected:
 	Tile *currentTile;
 
 	D3DXVECTOR3 position;
-	D3DXMATRIX mWorld;
+	D3DXMATRIX mWorld, mRot, mTranslate, mScale;
 
 	ID3D10EffectTechnique* tech;
 public:
 	GameObject(Tile *t, ID3D10EffectTechnique* tech, Model *m);
-	GameObject(Tile *t, ID3D10EffectTechnique* tech, Model *m, D3DXVECTOR3 pos);
+	GameObject(Tile *t, ID3D10EffectTechnique* tech, Model *m, D3DXVECTOR3 pos, float yRot);
 	~GameObject();
 
 	//if instanced this should not be called. Instead the game

@@ -24,11 +24,15 @@ private:
 	static Game *instance;
 	Camera *cam;
 
+	int fps;
+	double fpsUpdate;
+
+	ID3DX10Font	*font;
+
 	//these two takes the menu and first clears the buttons and then
 	//sets the buttons asociated with either Main menu or ingame menu.
 	void createMainMenu();
 	void createIngameMenu();
-	
 
 	EffectList list;
 

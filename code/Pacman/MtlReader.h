@@ -16,7 +16,7 @@ public:
 
 	void readFile(string filename);
 
-	Material *getMaterial(string name);
+	Material getMaterial(string name);
 
 	void reset();
 };

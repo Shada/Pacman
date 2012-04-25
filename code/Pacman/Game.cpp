@@ -15,6 +15,10 @@ Game::Game()
 	list.addEffect(new YellowEffect());
 	list.addEffect(new BlueEffect());
 	map = NULL;
+
+	fpsUpdate = fps = 0;
+
+	GraphicsManager::getInstance()->createFont(&font, 16, "Verdana");
 }
 
 Game *Game::getInstance()
@@ -27,6 +31,13 @@ Game *Game::getInstance()
 
 void Game::update(double time)
 {
+	fpsUpdate += time;
+	if(fpsUpdate >= 1)
+	{
+		fps = (int)(1.0 / time + 0.5);
+		fpsUpdate = 0;
+	}
+
 	keyManager->update(time);
 	cam->update(D3DXVECTOR3(0, 0, 0),time);
 	GraphicsManager::getInstance()->useViewAndProjection(cam->getViewMatrix(), cam->getProjMatrix());
@@ -37,18 +48,34 @@ void Game::update(double time)
 
 void Game::draw(double time)
 {
-	menu->draw();
+	//menu->draw();
 	if (map)
 		map->draw();
+
+	RECT t;
+	t.top = 100;
+	t.bottom = 150;
+	t.left = 100;
+	t.right = 200;
+
+	char buf[5];
+	sprintf_s(buf, "%d", fps);
+	string text = "FPS: " + (string)buf;
+
+	font->DrawTextA(NULL, text.c_str(), -1, &t, DT_LEFT | DT_CENTER , D3DXCOLOR(1, 1, 1, 1.0f));
+	GraphicsManager::getInstance()->resetBlendState();
 }
+
 void Game::newGame()
 {
 	map = new Map();
 }
+
 void Game::showLeaderboard()
 {
 
 }
+
 void Game::createMainMenu()
 {
 	if(!menu)
@@ -62,6 +89,7 @@ void Game::createMainMenu()
 	
 	menu->setFirstSelected();
 }
+
 void Game::createIngameMenu()
 {
 	if(!menu)
@@ -69,6 +97,7 @@ void Game::createIngameMenu()
 	else
 		menu->clearButtons();
 }
+
 Game::~Game()
 {
 	SAFE_DELETE(menu);

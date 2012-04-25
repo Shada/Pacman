@@ -4,8 +4,8 @@
 Camera::Camera()
 {
 	vEyePt		= D3DXVECTOR3	( 0,  100, 0 );
-	vLookAtPt	= D3DXVECTOR3	( 0, 0, 0 );
-	vUp			= D3DXVECTOR3	( 0, 0, 1 );
+	vLookAtPt	= D3DXVECTOR3	( 100, 0, 100 );
+	vUp			= D3DXVECTOR3	( 0, 1, 0 );
 	vDistance	= D3DXVECTOR3	( 0, -7, 15 );
 	vDesiredPt	= D3DXVECTOR3	( 0,  10, -20 );
 	
@@ -14,7 +14,7 @@ Camera::Camera()
 	mProj		= new D3DXMATRIX();
 
 	D3DXMatrixLookAtLH( mView, &vEyePt, &vLookAtPt, &vUp );
-	D3DXMatrixPerspectiveLH(mProj,	(float)D3DX_PI * .6f,
+	D3DXMatrixPerspectiveLH(mProj,	(float)D3DX_PI * .4f,
 									(float)(SCREENWIDTH / _SCREENHEIGHT), 1.0f, 3000.0f);
 }
 

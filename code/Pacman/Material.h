@@ -14,7 +14,7 @@ private:
 	string textureFileName,	alphaMapFileName;
 	ID3D10ShaderResourceView* g_pTextureResource, *g_pAlphaResource;
 public:
-
+	Material();
 	Material(string name);
 	~Material();
 

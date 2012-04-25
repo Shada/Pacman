@@ -16,6 +16,21 @@ Material::Material(string name)
 	g_pAlphaResource		= NULL;
 }
 
+Material::Material()
+{
+	this->name				= "default";
+	textureFileName			= "Images/default.png";
+	alphaMapFileName		= "Images/DefaultAlpha.jpg";
+	ka						= D3DXVECTOR3( 0.2f, 0.2f, 0.2f);
+	kd						= D3DXVECTOR3( 0.8f, 0.8f, 0.8f);
+	ks						= D3DXVECTOR3( 0.9f, 0.9f, 0.9f);
+	illum					= 0;
+	ns						= .0f;
+	alpha					= 1.0f;
+	g_pTextureResource		= NULL;
+	g_pAlphaResource		= NULL;
+}
+
 void Material::loadImageData()
 {
 	ID3D10Device* device = GraphicsManager::getInstance()->getDevice();

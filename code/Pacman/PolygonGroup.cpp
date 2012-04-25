@@ -5,14 +5,14 @@ PolygonGroup::PolygonGroup(string name)
 {
 	this->name = name;
 	bufferIndex = 0;
-	material = NULL;
+	material = Material("default");
 }
 
 void PolygonGroup::draw(ID3D10EffectTechnique* tech )
 {
 	GraphicsManager* m = GraphicsManager::getInstance();
 
-	m->useMaterial(material);
+	m->useMaterial(&material);
 	m->render(tech,bufferIndex,getVertexAmount());
 }
 void PolygonGroup::feedData(D3DXVECTOR3* vertex, D3DXVECTOR2* textureCoordinate, D3DXVECTOR3* normal)
@@ -34,5 +34,4 @@ void PolygonGroup::feedToPData(Vertex* pData)
 
 PolygonGroup::~PolygonGroup()
 {
-	SAFE_DELETE( material );
 }

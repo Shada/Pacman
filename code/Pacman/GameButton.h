@@ -45,8 +45,6 @@ public:
 		sprite->Begin(0);
 		font->DrawTextA(sprite, text.c_str(), -1, &rect, DT_LEFT, color);
 		sprite->End();
-
-		GraphicsManager::getInstance()->resetBlendState();
 	}
 	//to be called when selected
 	void setSelected()

@@ -218,6 +218,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader.fx" />
-    <None Include="Shader.fxo" />
   </ItemGroup>
 </Project>

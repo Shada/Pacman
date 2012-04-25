@@ -9,16 +9,20 @@ Map::Map()
 	tiles = lreader->readFile("map.raw", 60, 60);
 	ghosts = lreader->getGhosts();
 
-	generateWalls();
-
-	floor = new Floor(new D3DXVECTOR3(0, 10, 0), D3DXVECTOR2(600, 600));
+	floor = new Floor(new D3DXVECTOR3(0, 0, 0), D3DXVECTOR2(200, 200));
 	wall = new Model("wall");
+	
+	objReader->readData("Models/wall.obj", wall);
+	
+	objects = lreader->getCornerWalls();
 
-	//objReader->readData("wall.obj", wall);
+	generateWalls();
 }
 
 void Map::draw()
 {
+	for(unsigned int i = 0; i < objects.size(); i++)
+		objects.at(i)->draw();
 	floor->draw();
 }
 
@@ -32,27 +36,17 @@ void Map::generateWalls()
 
 void Map::placeWall(int indexTile, int indexNeighbour)
 {
-	double rotation;
-	D3DXVECTOR3 tempPos;
+	ID3D10EffectTechnique *tech = GraphicsManager::getInstance()->g_pTechRender;
+	float rotation, pi;
+	pi = (float)D3DX_PI;
 	D3DXVECTOR3 pos = tiles.at(indexTile)->getPos();
-	D3DXVECTOR2 dim = tiles.at(indexTile)->getDim();
 	
 	if(indexNeighbour == 0 || indexNeighbour == 1)
-	{
-		rotation = indexNeighbour == 0.f ? 0 : D3DX_PI;
-
-		pos.z = indexNeighbour == 0 ? pos.z + dim.y * 0.4f : pos.z - dim.y * 0.4f;
-		tempPos = D3DXVECTOR3(pos.x, pos.y, pos.z);
-	}
+		rotation = indexNeighbour == 0.f ? 0 : pi;
 	else
-	{
-		rotation = indexNeighbour == 2 ? D3DX_PI * 0.5 : D3DX_PI * 1.5;
+		rotation = indexNeighbour == 2 ? pi * 1.5f : pi * 0.5f;
 
-		pos.x = indexNeighbour == 2 ? pos.x + dim.x * 0.4f : pos.x - dim.x * 0.4f;
-		tempPos = D3DXVECTOR3(pos.x, pos.y, pos.z);
-	}
-
-	objects.push_back(new GameObject(tiles.at(indexTile), NULL, wall, tempPos));
+	objects.push_back(new GameObject(tiles.at(indexTile), tech, wall, pos, rotation));
 }
 
 Map::~Map()

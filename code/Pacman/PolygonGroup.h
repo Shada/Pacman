@@ -12,7 +12,7 @@ private:
 	vector<Vertex> vertices;
 public:
 
-	Material* material;
+	Material material;
 	
 	PolygonGroup(string name);
 	~PolygonGroup();

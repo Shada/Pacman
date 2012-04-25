@@ -9,6 +9,9 @@ LevelReader::LevelReader()
 	green.r = green.b = 0; green.g = 255;
 	white.r = white.g = white.b = 255;
 
+
+	reader = new ObjReader();
+	objects = vector<GameObject*>();
 	ghosts = vector<Ghost*>();
 }
 
@@ -19,6 +22,8 @@ vector<Tile*> LevelReader::readFile(char* filename, const int _width, const int 
 
 	nTilesX = width / 3;
 	nTilesY = height / 3;
+
+	corner = m = NULL;
 
 	tiles = vector<Tile*>();
 	pixelData.resize(width);
@@ -40,6 +45,8 @@ vector<Tile*> LevelReader::readFile(char* filename, const int _width, const int 
 	file.close();
 
 	createTiles();
+
+	placeCornerWalls();
 
 	placePillsAndGhosts();
 
@@ -116,6 +123,22 @@ void LevelReader::placePillsAndGhosts()
 	}
 }
 
+void LevelReader::placeCornerWalls()
+{
+	D3DXVECTOR3 startPos = tiles.front()->getPos();
+	D3DXVECTOR2 dimensions = tiles.front()->getDim();
+	corner = new Model("corner");
+	reader->readData("Models/corner.obj", corner);
+
+	ID3D10EffectTechnique *tech = GraphicsManager::getInstance()->g_pTechRender;
+
+	for(int i = 0; i < height / 3 + 1; i++)
+		for(int j = 0; j < width / 3 + 1; j++)
+			objects.push_back(new GameObject(NULL, tech, corner, 
+								D3DXVECTOR3(startPos.x + dimensions.x * j, 
+								startPos.y, startPos.z + dimensions.y * i), 0));
+}
+
 AI *LevelReader::chooseAIType(Pixel data)
 {
 	AI *ai;
@@ -132,4 +155,5 @@ AI *LevelReader::chooseAIType(Pixel data)
 LevelReader::~LevelReader()
 {
 	SAFE_DELETE( m );
+	SAFE_DELETE( corner );
 }

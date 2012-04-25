@@ -54,6 +54,7 @@ void GameMenu::draw()
 		//m->render();
 		for(unsigned int i = 0; i < buttons.size(); i++)
 			buttons.at(i)->draw();
+		GraphicsManager::getInstance()->resetBlendState();
 	}
 }
 GameMenu::~GameMenu()

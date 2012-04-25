@@ -127,12 +127,12 @@ void MtlReader::reset()
 	materials.clear();
 }
 
-Material *MtlReader::getMaterial( string name )
+Material MtlReader::getMaterial( string name )
 {
 	// Search the list for the material-name.
 	for(unsigned int i = 0; i < materials.size(); i++)
 		if(materials.at(i)->name == name)
-			return materials.at(i);
+			return *materials.at(i);
 
 	// If the material can't be found, return null.
 	return NULL;

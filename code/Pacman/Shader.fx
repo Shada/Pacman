@@ -1,3 +1,4 @@
+Texture2D diffuse, alpha;
 struct VSSceneIn
 {
 	float3 pos		: POS;
@@ -7,13 +8,9 @@ struct VSSceneIn
 struct PSSceneIn
 {
 	float4 pos		: SV_Position;
-	float4 norm		: NORM;
 	float2 texCoord : TEXCOORD;
 };
 
-cbuffer cbOnce
-{
-}
 cbuffer cbEveryFrame
 {
 	float3 Ka;
@@ -27,9 +24,9 @@ cbuffer cbEveryFrame
 	matrix mView;
 };
 
-SamplerState AnisotropicSampler
+SamplerState linearSampler
 {
-	Filter = ANISOTROPIC;
+	Filter = MIN_MAG_MIP_LINEAR;
 	AddressU = Wrap;
 	AddressV = Wrap;
 };
@@ -66,13 +63,15 @@ PSSceneIn VSScene(VSSceneIn input)
 	mWorldViewProjection = mul(mWorldView, mProjection);
 
 	output.pos = mul( float4(input.pos, 1.0), mWorldViewProjection );
-
+	output.texCoord = input.texCoord;
 	return output;
 };
 
 float4 PSScene(PSSceneIn input) : SV_Target
 {
-	return float4(.8f,.5f,.3f,1);
+	float3 col = diffuse.Sample(linearSampler, input.texCoord);
+
+	return float4(col, 0);
 };
 
 technique10 DrawScene

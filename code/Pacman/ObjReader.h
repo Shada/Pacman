@@ -17,7 +17,7 @@ private:
 	vector<D3DXVECTOR3*> *normals;
 	vector<D3DXVECTOR2*> *texels;
 
-	vector<PolygonGroup> *groups;
+	vector<PolygonGroup*> *groups;
 	MtlReader			 *mtlreader;
 
 	ifstream			 *datafile;

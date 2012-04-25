@@ -10,7 +10,7 @@ class Model
 	friend class MtlReader;
 private:
 
-	vector<PolygonGroup> groups;
+	vector<PolygonGroup*> groups;
 	string name;
 	ID3D10Buffer* g_pVB;
 	
@@ -30,7 +30,7 @@ public:
 	string getName()					{ return name;			}
 	int getVertexAmount()				{ return vertexAmount;	}
 	ID3D10Buffer* getBuffer()			{ return g_pVB;			}
-	vector<PolygonGroup> *getGroups()	{ return &groups;		}
+	vector<PolygonGroup*> *getGroups()	{ return &groups;		}
 
 	void loadImageData();
 };

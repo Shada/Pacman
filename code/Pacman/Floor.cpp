@@ -8,13 +8,13 @@ Floor::Floor(D3DXVECTOR3 *startPos, D3DXVECTOR2 dimensions)
 
 	model = new Model("Floor");
 
-	vector<PolygonGroup> *poly = model->getGroups();
+	vector<PolygonGroup*> *poly = model->getGroups();
 
-	poly->push_back(PolygonGroup("default"));
+	poly->push_back(new PolygonGroup("default"));
 
-	PolygonGroup *group = &poly->back();
+	PolygonGroup *group = poly->back();
 
-	group->material = new Material("floor material");
+	group->material = Material("floor material");
 
 
 	//first triangle
@@ -25,11 +25,11 @@ Floor::Floor(D3DXVECTOR3 *startPos, D3DXVECTOR2 dimensions)
 	group->feedData(pos, texC, normal);
 	
 	pos->z = dimensions.y;
-	texC->y = dimensions.y / 10;
+	texC->y = dimensions.y / 20;
 	group->feedData(pos, texC, normal);
 
 	pos->x = dimensions.x;
-	texC->x = dimensions.x / 10;
+	texC->x = dimensions.x / 20;
 	group->feedData(pos, texC, normal);
 	
 	//second triangle
@@ -39,8 +39,8 @@ Floor::Floor(D3DXVECTOR3 *startPos, D3DXVECTOR2 dimensions)
 
 	pos->x = dimensions.x;
 	pos->z = dimensions.y;
-	texC->x = dimensions.x / 10;
-	texC->y = dimensions.y / 10;
+	texC->x = dimensions.x / 20;
+	texC->y = dimensions.y / 20;
 	group->feedData(pos, texC, normal);
 
 	pos->z = 0;
@@ -51,7 +51,7 @@ Floor::Floor(D3DXVECTOR3 *startPos, D3DXVECTOR2 dimensions)
 	SAFE_DELETE(pos);
 	SAFE_DELETE(texC);
 
-	group->material->setTexture("sda");
+	group->material.setTexture("sda");
 	
 	model->loadImageData();
 	model->feedData();

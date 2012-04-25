@@ -76,7 +76,7 @@ void ObjReader::readFace()
 				texIndex >> separator >> normIndex;
 
 		// Feed the info to the current group.
-		groups->at( groupIndex ).feedData( vertices->at( vertIndex - 1 ), 
+		groups->at( groupIndex )->feedData( vertices->at( vertIndex - 1 ), 
 							texels->at( texIndex - 1 ), normals->at( normIndex - 1 ) );
 	}
 }
@@ -116,13 +116,13 @@ void ObjReader::readGroup()
 	for( unsigned int i = 0; i < groups->size(); i++ )
 	{
 		// Check if there exist a group with the name.
-		if( t.find( groups->at( i ).getName() ) != string::npos )
+		if( t.find( groups->at( i )->getName() ) != string::npos )
 			groupIndex = i;
 	}
 	if( groupIndex == temp )
 	{
 		// Add new group if there aren't any group with the name.
-		groups->push_back( PolygonGroup( t ) );
+		groups->push_back( new PolygonGroup( t ) );
 	}
 }
 
@@ -140,7 +140,7 @@ void ObjReader::readUse()
 		*datafile >> t;
 		// Get the material with the name from the mtl reader
 		// and add it to the current group.
-		groups->at( groupIndex ).material = mtlreader->getMaterial( t );
+		groups->at( groupIndex )->material = mtlreader->getMaterial( t );
 	}
 	else
 		datafile->getline( buffer, 32 );
@@ -172,7 +172,7 @@ void ObjReader::readData( string filename, Model *model )
 				case 'f': //face data
 					readFace();
 					break;
-				case 'm': //mtl?
+				case 'm': //mtl
 					readMtl();
 					break;
 				case 'g':
@@ -191,6 +191,9 @@ void ObjReader::readData( string filename, Model *model )
 		cout << "Unable to open " << filename << endl;
 
 	model->feedData();
+	model->loadImageData();
+	model->createBuffer();
+
 	SAFE_DELETE( datafile );
 }
 

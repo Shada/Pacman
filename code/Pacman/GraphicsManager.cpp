@@ -191,14 +191,14 @@ void GraphicsManager::useMaterial(Material* mat)
 {
 	//Send in variables to the shader
 	ID3D10ShaderResourceView* texture = mat->getTextureResource();
-	ID3D10ShaderResourceView* alpha = mat->getAlphaResource();
-	if(texture)
-		g_pEffect->GetVariableByName("pic")->AsShaderResource()->SetResource(texture);
-	if(alpha)
-		g_pEffect->GetVariableByName("alphaMap")->AsShaderResource()->SetResource(alpha);
+	//ID3D10ShaderResourceView* alpha = mat->getAlphaResource();
+	//if(texture)
+		g_pEffect->GetVariableByName("diffuse")->AsShaderResource()->SetResource(texture);
+	/*if(alpha)
+		g_pEffect->GetVariableByName("alpha")->AsShaderResource()->SetResource(alpha);*/
 	g_pEffect->GetVariableByName( "Ka" )->AsVector()->SetFloatVector( (float*)&mat->getKa() );
-	g_pEffect->GetVariableByName( "Kd" )->AsVector()->SetFloatVector( (float*)&mat->getKd() );
-	g_pEffect->GetVariableByName( "Ks" )->AsVector()->SetFloatVector( (float*)&mat->getKs() );
+	//g_pEffect->GetVariableByName( "Kd" )->AsVector()->SetFloatVector( (float*)&mat->getKd() );
+	//g_pEffect->GetVariableByName( "Ks" )->AsVector()->SetFloatVector( (float*)&mat->getKs() );
 }
 
 void GraphicsManager::resetBlendState()
@@ -246,7 +246,7 @@ void GraphicsManager::useViewAndProjection(const D3DXMATRIX *mView, const D3DXMA
 void GraphicsManager::clearRenderTarget()
 {
 	//clear render target
-	g_pd3dDevice->ClearRenderTargetView( g_pRenderTargetView, D3DXVECTOR4(.3f,.3f,.3f,.3f) );
+	g_pd3dDevice->ClearRenderTargetView( g_pRenderTargetView, D3DXVECTOR4(.3f,.5f,1.f,.3f) );
 
 	//clear depth info
 	g_pd3dDevice->ClearDepthStencilView( g_pDepthStencilView, D3D10_CLEAR_DEPTH, 1.0f, 0 );
