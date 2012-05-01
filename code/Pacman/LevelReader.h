@@ -34,7 +34,7 @@ private:
 
 	int height, width, nTilesX, nTilesY;
 
-	Model *corner, *wall, *pill;
+	Model *corner, *wall, *pill, *ghost;
 	ObjReader *reader;
 
 	InstanceManager *iWalls, *iCorners, *iPills;
@@ -48,7 +48,7 @@ private:
 	void placePillsAndGhosts();
 	void placeCornerWalls();
 	
-	AI *chooseAIType(Pixel data);
+	AI *chooseAIType(Pixel data, Tile *t);
 
 public:
 	LevelReader();

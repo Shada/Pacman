@@ -136,8 +136,10 @@ void LevelReader::placeWall(int indexTile, int indexNeighbour)
 void LevelReader::placePillsAndGhosts()
 {
 	ID3D10EffectTechnique *tech = GraphicsManager::getInstance()->g_pTechRender;
-	pill = new Model("");
-	reader->readData("Models/watch2.obj", pill);
+	pill = new Model("pill");
+	ghost = new Model("ghost");
+	reader->readData("Models/pill.obj", pill);
+	reader->readData("Models/ghost.obj", ghost);
 	iPills = new InstanceManager(pill, 0.001f);
 
 	for(unsigned int i = 0; i < tiles.size(); i++)
@@ -161,7 +163,7 @@ void LevelReader::placePillsAndGhosts()
 		}
 
 		else if( pixelData[x][y].g == 255 && pixelData[x][y] != white )
-			ghosts.push_back(new Ghost(chooseAIType(pixelData[x][y]), tiles.at(i)));
+			ghosts.push_back(new Ghost(chooseAIType(pixelData[x][y], tiles.at(i)), tiles.at(i), tech, ghost));
 	}
 	iPills->mapBuffers();
 }
@@ -188,15 +190,15 @@ void LevelReader::placeCornerWalls()
 	iCorners->mapBuffers();
 }
 
-AI *LevelReader::chooseAIType(Pixel data)
+AI *LevelReader::chooseAIType(Pixel data, Tile *t)
 {
 	AI *ai;
 	if(data.r == 0)
-		ai = new SimpleAI(0);
+		ai = new SimpleAI(&tiles, t);
 	else if (data.r == 1)
-		ai = new AverageAI(0);
+		ai = new AverageAI(&tiles, t);
 	else if (data.r == 2)
-		ai = new SmartAI(0);
+		ai = new SmartAI(&tiles, t);
 	 
 	return ai;
 }

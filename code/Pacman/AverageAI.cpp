@@ -1,8 +1,8 @@
 #include "AverageAI.h"
 
 
-AverageAI::AverageAI(int tileAmount)
-	:AI(tileAmount)
+AverageAI::AverageAI(vector<Tile*> *tiles, Tile *spawn)
+	:AI(tiles, spawn)
 {
 }
 

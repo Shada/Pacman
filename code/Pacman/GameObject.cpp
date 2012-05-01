@@ -8,6 +8,8 @@ GameObject::GameObject(Tile *t, ID3D10EffectTechnique* tech, Model *m)
 	this->tech = tech;
 	this->position = t->getPos();
 	this->currentTile = t;
+
+	D3DXMatrixTranslation( &mWorld, position.x, position.y, position.z );
 }
 
 GameObject::GameObject(Tile *t, ID3D10EffectTechnique* tech, Model *m, D3DXVECTOR3 pos, float yRot)

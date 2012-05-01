@@ -1,12 +1,12 @@
 #include "SmartAI.h"
 
 
-SmartAI::SmartAI(int tileAmount)
-	:AI(tileAmount)
+SmartAI::SmartAI(vector<Tile*> *tiles, Tile *spawn)
+	:AI(tiles, spawn)
 {
 }
 
-Direction SmartAI::decideMovement(Tile *currentTile)
+Direction SmartAI::decideMovement()
 {
 	return D_SIZE;
 }

@@ -29,6 +29,10 @@ void Map::draw()
 	iCorners->draw();
 	iPills->draw();
 	
+	for(unsigned int i = 0; i < ghosts.size(); i++)
+	{
+		ghosts.at(i)->draw();
+	}
 	floor->draw();
 }
 

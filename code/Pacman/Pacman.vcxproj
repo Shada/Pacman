@@ -72,6 +72,7 @@
     <ClCompile Include="BluePill.cpp" />
     <ClCompile Include="BuffEffect.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="EffectList.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="BluePill.h" />
     <ClInclude Include="BuffEffect.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="EffectList.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Game.h" />

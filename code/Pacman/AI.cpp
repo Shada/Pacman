@@ -1,20 +1,106 @@
 #include "AI.h"
 
 
-AI::AI(unsigned int tileAmount)
+AI::AI(vector<Tile*> *tiles, Tile *spawn)
 {
-	this->tileAmount = tileAmount;
-	handledTiles = vector<Tile*>();
+	state = S_REGULAR;
+	this->tiles = tiles;
+	this->spawn = spawn;
 }
 
-Direction AI::decideMovement(Tile *currentTile)
+Direction AI::decideMovement(D3DXVECTOR3 position)
 {
+	switch(state)
+	{
+	case S_REGULAR:
+		{
+			regular(position);
+			break;
+		}
+	case S_DEAD:
+		{
+			dead(position);
+			break;
+		}
+	case S_FLEE:
+		{
+			flee(position);
+			break;
+		}
+	}
+	
+	if(getTileClosestAt(position) == destination || !destination)
+	{
+		for(int i = 0; i < 1000000; i++)
+		{
+			destination = tiles->at( rand()%tiles->size() );
+			if(calcRoute(getTileClosestAt(position),destination))
+				break;
+		}
+	}
+	if(!route.empty())
+	{
+		Direction dir = route.front();
+		route.pop_front();
+		return dir;
+	}
 	return D_SIZE;
 }
 
-void AI::calcRoute(Tile *startTile, Tile *endTile)
+void AI::regular(D3DXVECTOR3 position)
 {
+}
+
+void AI::flee(D3DXVECTOR3 position)
+{
+}
+
+void AI::dead(D3DXVECTOR3 position)
+{
+}
+
+bool AI::calcRoute(Tile *startTile, Tile *endTile)
+{
+	//calculate costs and find shortest path
 	int cost = tryAllDirs(startTile, endTile, 0);
+	if(cost != INT_MAX)
+	{
+		route.clear();
+		Tile* currentTile = startTile;
+		//build list of directions as route
+		while(true)
+		{
+			currentTile = currentTile->checkDirection(currentTile->shortestDir);
+			if(currentTile != endTile)
+				route.push_back(currentTile->shortestDir);
+			else
+				return true;
+		}
+		return true;
+	}
+	return false;
+}
+
+Tile* AI::getTileClosestAt(D3DXVECTOR3 pos)
+{
+	float distance = FLT_MAX;
+	float tempDist;
+	Tile* closestTile = NULL;
+	for(unsigned int i = 0; i < tiles->size(); i++)
+	{
+		tempDist = D3DXVec3Length(&(tiles->at(i)->getPos() - pos));
+		if(tempDist < distance)
+		{
+			distance = tempDist;
+			closestTile = tiles->at(i);
+		}
+	}
+	return closestTile;
+}
+
+void AI::checkAllDirs()
+{
+
 }
 
 int AI::tryAllDirs(Tile *tile, Tile *endTile, int cost)

@@ -5,8 +5,8 @@ class SmartAI :
 	public AI
 {
 public:
-	SmartAI(int tileAmount);
+	SmartAI(vector<Tile*> *tiles, Tile *spawn);
 	~SmartAI();
 
-	Direction decideMovement(Tile *currentTile);
+	Direction decideMovement();
 };

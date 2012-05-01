@@ -5,7 +5,7 @@ class AverageAI :
 	public AI
 {
 public:
-	AverageAI(int tileAmount);
+	AverageAI(vector<Tile*> *tiles, Tile *spawn);
 	~AverageAI();
 
 	Direction decideMovement(Tile *currentTile);
