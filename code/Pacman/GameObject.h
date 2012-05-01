@@ -11,6 +11,7 @@ protected:
 
 	D3DXVECTOR3 position;
 	D3DXMATRIX mWorld, mRot, mTranslate, mScale;
+	float rotation;
 
 	ID3D10EffectTechnique* tech;
 public:
@@ -25,9 +26,13 @@ public:
 	//Will first send in the objects worldmatrix to the shader
 	//then call its model's draw()
 	virtual void draw();
-	virtual void update(float dt);
+	virtual void update(double dt);
 
 	const D3DXVECTOR3 getPos() { return position; }
+	int getVertexAmount() { return model->getVertexAmount(); }
+	float getRot() { return rotation; }
+	ID3D10Buffer* getBuffer() { return model->getBuffer(); }
+	Material getMaterial() { return model->getGroups()->front()->material; }
 
 	//used for instancing when game will collect all objects it  
 	//wants to draw instanced's worldmatrices.

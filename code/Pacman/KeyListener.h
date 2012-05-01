@@ -1,4 +1,5 @@
 #pragma once
+
 class KeyListener
 {
 public:
@@ -9,4 +10,3 @@ public:
 	virtual void handleKeyStrokes(int key) { ;}
 	~KeyListener();
 };
-

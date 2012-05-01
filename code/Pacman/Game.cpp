@@ -16,6 +16,11 @@ Game::Game()
 	list.addEffect(new BlueEffect());
 	map = NULL;
 
+	fpsRect.top = 10;
+	fpsRect.bottom = 26;
+	fpsRect.left = 20;
+	fpsRect.right = 100;
+
 	fpsUpdate = fps = 0;
 
 	GraphicsManager::getInstance()->createFont(&font, 16, "Verdana");
@@ -48,21 +53,15 @@ void Game::update(double time)
 
 void Game::draw(double time)
 {
-	//menu->draw();
+	menu->draw();
 	if (map)
 		map->draw();
-
-	RECT t;
-	t.top = 100;
-	t.bottom = 150;
-	t.left = 100;
-	t.right = 200;
 
 	char buf[5];
 	sprintf_s(buf, "%d", fps);
 	string text = "FPS: " + (string)buf;
 
-	font->DrawTextA(NULL, text.c_str(), -1, &t, DT_LEFT | DT_CENTER , D3DXCOLOR(1, 1, 1, 1.0f));
+	font->DrawTextA(NULL, text.c_str(), -1, &fpsRect, DT_LEFT , D3DXCOLOR(1, 1, 1, 1.0f));
 	GraphicsManager::getInstance()->resetBlendState();
 }
 

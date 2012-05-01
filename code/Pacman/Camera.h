@@ -5,14 +5,16 @@ class Camera
 {
 private:
 	D3DXMATRIX		*mView,		//view-matrix
-					*mProj;				
+					*mProj,
+					mRot;				
 
 	D3DXVECTOR3     vEyePt,     //eye point
 					vDesiredPt,	//wanted point
                     vLookAtPt,  //look-at target
                     vUp,		//up-vector
 					vDistance;	//distance to player
-	float fRot;
+	
+	float			fRot;
 
 public:
 	Camera();

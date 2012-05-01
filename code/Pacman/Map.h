@@ -4,22 +4,23 @@
 #include "LevelReader.h"
 #include "Floor.h"
 #include "Ghost.h"
+#include "InstanceManager.h"
 
 class Map
 {
 private:
-	vector<GameObject*> objects;
+	vector<GameObject*> walls;
 	vector<Tile*> tiles;
 
 	LevelReader *lreader;
 	ObjReader *objReader;
-	Model *wall;
+	Model *wall, *corner;
 	Floor *floor;
 	vector<Ghost*> ghosts;
 
-	void generateWalls();
-	void generatePills();
-	void placeWall(int indexTile, int indexNeighbour);
+	ID3D10Buffer* instanceBuffer;
+
+	InstanceManager *iWalls, *iCorners, *iPills;
 
 public:
 	Map();

@@ -8,6 +8,11 @@ struct Vertex
 	D3DXVECTOR3 normal;
 	D3DXVECTOR2 texCoord;
 };
+struct InstanceType
+{
+	D3DXVECTOR3 position;
+	float rotation;
+};
 class GraphicsManager
 {
 private:
@@ -44,13 +49,13 @@ public:
 	void renderInstanced(ID3D10EffectTechnique* tech,int instanceCount, int bufferIndex, int numberOfVertices);
 	
 
-	void useMaterial(Material* mat);
+	void useMaterial(Material mat);
 
 	void useBuffer(ID3D10Buffer* vB);
 	void useWorldMatrix(D3DXMATRIX m);
 
 	//used when using instancing
-	void useWorldMatrices(const D3DXMATRIX m[], int size);
+	void useWorldMatrices(D3DXMATRIX *m, int size);
 
 	// Send in variables to the shader
 	void useViewAndProjection(const D3DXMATRIX *mView, const D3DXMATRIX *mProj);
@@ -65,7 +70,7 @@ public:
 	void createFont(LPD3DX10FONT *font, int height,LPCSTR fontname);
 	void createSprite(LPD3DX10SPRITE* sprite);
 	//shader techniques
-	ID3D10EffectTechnique *g_pTechRender;
+	ID3D10EffectTechnique *g_pTechRender, *g_pTechInstanced;
 
-	ID3D10InputLayout *g_pVertexLayout;
+	ID3D10InputLayout *g_pVertexLayout, *g_pInstanceLayout;
 };

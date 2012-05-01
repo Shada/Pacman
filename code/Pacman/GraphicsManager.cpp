@@ -140,8 +140,13 @@ createDeviceFlags |= D3D10_CREATE_DEVICE_DEBUG;
 		MessageBox(0, "Error compiling shader!", "Shader error!", 0);
 		return E_FAIL;
 	}
-
+	g_pTechInstanced = NULL;
 	g_pTechRender = g_pEffect->GetTechniqueByName("DrawScene");
+	if(FAILED(g_pTechInstanced = g_pEffect->GetTechniqueByName("RenderInstanced")))
+	{
+		MessageBox(0, "Error compiling yo mama!", "Shader error!", 0);
+		return E_FAIL;
+	}
 
 	const D3D10_INPUT_ELEMENT_DESC vertexLayout[] =
 	{
@@ -149,6 +154,16 @@ createDeviceFlags |= D3D10_CREATE_DEVICE_DEBUG;
 		{ "NORM", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, sizeof(float) * 3, D3D10_INPUT_PER_VERTEX_DATA, 0 },
 		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, sizeof(float) * 6, D3D10_INPUT_PER_VERTEX_DATA, 0 }
 	};
+
+	const D3D10_INPUT_ELEMENT_DESC instanceLayout[] =
+	{
+		{ "POS", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D10_INPUT_PER_VERTEX_DATA, 0 },
+		{ "NORM", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, sizeof(float) * 3, D3D10_INPUT_PER_VERTEX_DATA, 0 },
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, sizeof(float) * 6, D3D10_INPUT_PER_VERTEX_DATA, 0 },
+		{ "TEXCOORD", 1, DXGI_FORMAT_R32G32B32_FLOAT, 1, 0, D3D10_INPUT_PER_INSTANCE_DATA, 1 },
+		{ "TEXCOORD", 2, DXGI_FORMAT_R32_FLOAT, 1, sizeof(float) * 3, D3D10_INPUT_PER_INSTANCE_DATA, 1 }
+	};
+	
 
 	D3D10_PASS_DESC PassDesc;
 	g_pTechRender->GetPassByIndex(0)->GetDesc(&PassDesc);
@@ -160,6 +175,13 @@ createDeviceFlags |= D3D10_CREATE_DEVICE_DEBUG;
 	PassDesc.IAInputSignatureSize,
 	&g_pVertexLayout );
 
+	g_pTechInstanced->GetPassByIndex(0)->GetDesc(&PassDesc);
+
+	g_pd3dDevice->CreateInputLayout(instanceLayout,
+	sizeof(instanceLayout) / sizeof(D3D10_INPUT_ELEMENT_DESC),
+	PassDesc.pIAInputSignature,
+	PassDesc.IAInputSignatureSize,
+	&g_pInstanceLayout );
 	return S_OK;
 }
 
@@ -182,21 +204,21 @@ void GraphicsManager::useBuffer(ID3D10Buffer* vB)
 	UINT stride = sizeof(Vertex), offset = 0;
 
 	//Set the layouts and topology
-	g_pd3dDevice->IASetInputLayout( g_pVertexLayout );
+	
 	g_pd3dDevice->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
 	g_pd3dDevice->IASetVertexBuffers( 0, 1, &vB, &stride, &offset );
 }
 
-void GraphicsManager::useMaterial(Material* mat)
+void GraphicsManager::useMaterial(Material mat)
 {
 	//Send in variables to the shader
-	ID3D10ShaderResourceView* texture = mat->getTextureResource();
+	ID3D10ShaderResourceView* texture = mat.getTextureResource();
 	//ID3D10ShaderResourceView* alpha = mat->getAlphaResource();
 	//if(texture)
 		g_pEffect->GetVariableByName("diffuse")->AsShaderResource()->SetResource(texture);
 	/*if(alpha)
 		g_pEffect->GetVariableByName("alpha")->AsShaderResource()->SetResource(alpha);*/
-	g_pEffect->GetVariableByName( "Ka" )->AsVector()->SetFloatVector( (float*)&mat->getKa() );
+	g_pEffect->GetVariableByName( "Ka" )->AsVector()->SetFloatVector( (float*)&mat.getKa() );
 	//g_pEffect->GetVariableByName( "Kd" )->AsVector()->SetFloatVector( (float*)&mat->getKd() );
 	//g_pEffect->GetVariableByName( "Ks" )->AsVector()->SetFloatVector( (float*)&mat->getKs() );
 }
@@ -210,13 +232,14 @@ void GraphicsManager::useWorldMatrix(D3DXMATRIX m)
 	g_pEffect->GetVariableByName("mWorld")->AsMatrix()->SetMatrix((float*)&m);
 }
 
-void GraphicsManager::useWorldMatrices(const D3DXMATRIX m[], int size)
+void GraphicsManager::useWorldMatrices(D3DXMATRIX *m, int size)
 {
-	g_pEffect->GetVariableByName("mWorld")->AsMatrix()->SetMatrixArray((float*)&m,0,size);
+	g_pEffect->GetVariableByName("mWorldIns")->AsMatrix()->SetMatrixArray((float*)m,0,size);
 }
 
 void GraphicsManager::render(ID3D10EffectTechnique* tech, int bufferIndex, int numberOfVertices)
 {
+	g_pd3dDevice->IASetInputLayout( g_pVertexLayout );
 	D3D10_TECHNIQUE_DESC techDesc;
 	tech->GetDesc( &techDesc );
 	for( UINT p = 0; p < techDesc.Passes; p++ )
@@ -228,11 +251,12 @@ void GraphicsManager::render(ID3D10EffectTechnique* tech, int bufferIndex, int n
 
 void GraphicsManager::renderInstanced(ID3D10EffectTechnique* tech, int instanceCount, int bufferIndex, int numberOfVertices)
 {
+	g_pd3dDevice->IASetInputLayout( g_pInstanceLayout );
 	D3D10_TECHNIQUE_DESC techDesc;
-	tech->GetDesc( &techDesc );
+	g_pTechRender->GetDesc( &techDesc );
 	for( UINT p = 0; p < techDesc.Passes; p++ )
 	{
-		tech->GetPassByIndex( p )->Apply(0);
+		g_pTechInstanced->GetPassByIndex( p )->Apply(0);
 		g_pd3dDevice->DrawInstanced(numberOfVertices,instanceCount,bufferIndex,0);
 	}
 }

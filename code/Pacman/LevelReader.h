@@ -1,9 +1,9 @@
 #pragma once
-#include "YellowPill.h"
-#include "BluePill.h"
+#include "Pill.h"
 #include "Model.h"
 #include "ObjReader.h"
 
+#include "InstanceManager.h"
 #include "Ghost.h"
 #include "AverageAI.h"
 #include "SmartAI.h"
@@ -27,28 +27,38 @@ class LevelReader
 {
 private:
 	Pixel black, yellow, blue, green, white;
-	vector<vector<Pixel>> pixelData;
+
 	vector<Tile*> tiles;
+	vector<Ghost*> ghosts;
+	vector<vector<Pixel>> pixelData;
 
 	int height, width, nTilesX, nTilesY;
 
-	Model *m, *corner;
+	Model *corner, *wall, *pill;
 	ObjReader *reader;
-	vector<Ghost*> ghosts;
-	vector<GameObject*> objects;
+
+	InstanceManager *iWalls, *iCorners, *iPills;
 
 	void createTiles();
 	void mapTiles(int x, int y, int tileIndex);
+	
+	void generateWalls();
+	void placeWall(int indexTile, int indexNeighbour);
+	
 	void placePillsAndGhosts();
 	void placeCornerWalls();
-
+	
 	AI *chooseAIType(Pixel data);
+
 public:
 	LevelReader();
 	~LevelReader();
 
+	
 	vector<Ghost*>		getGhosts()			{ return ghosts; }
-	vector<GameObject*> getCornerWalls()	{ return objects; }
+	InstanceManager		*getCornerWalls()	{ return iCorners; }
+	InstanceManager		*getWalls()			{ return iWalls; }
+	InstanceManager		*getPills()			{ return iPills; }
 
 	vector<Tile*> readFile(char* filename, const int _width, const int _height);
 };

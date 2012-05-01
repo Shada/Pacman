@@ -52,7 +52,4 @@ void Material::loadAlphaMap()
 
 Material::~Material()
 {
-	//release the resources
-	SAFE_RELEASE(g_pTextureResource);
-	SAFE_RELEASE(g_pAlphaResource);
 }

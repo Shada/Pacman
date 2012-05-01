@@ -22,5 +22,5 @@ public:
 	~Ghost();
 
 	void draw();
-	void update(float dt);
+	void update(double dt);
 };

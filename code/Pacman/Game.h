@@ -27,6 +27,7 @@ private:
 	int fps;
 	double fpsUpdate;
 
+	RECT fpsRect;
 	ID3DX10Font	*font;
 
 	//these two takes the menu and first clears the buttons and then

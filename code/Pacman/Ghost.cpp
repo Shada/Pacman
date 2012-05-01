@@ -13,7 +13,7 @@ void Ghost::live()
 	dead = false;
 }
 
-void Ghost::update(float dt)
+void Ghost::update(double dt)
 {
 	Tile *temp = currentTile->checkDirection(ai->decideMovement(currentTile));
 

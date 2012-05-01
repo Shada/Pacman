@@ -1,10 +1,21 @@
 Texture2D diffuse, alpha;
+
+
 struct VSSceneIn
 {
 	float3 pos		: POS;
 	float3 norm		: NORM;
 	float2 texCoord	: TEXCOORD;
 };
+struct VSInstanceIn
+{
+	float3 pos		: POS;
+	float3 norm		: NORM;
+	float2 texCoord	: TEXCOORD0;
+	float3 insPos	: TEXCOORD1;
+	float  rotation : TEXCOORD2;
+};
+
 struct PSSceneIn
 {
 	float4 pos		: SV_Position;
@@ -18,6 +29,7 @@ cbuffer cbEveryFrame
 	float time;
 
 	matrix mWorld;
+	matrix mWorldIns[701];
 	matrix mWorldViewProjection;
 	matrix mProjection;	
 	matrix mWorldView;
@@ -27,6 +39,13 @@ cbuffer cbEveryFrame
 SamplerState linearSampler
 {
 	Filter = MIN_MAG_MIP_LINEAR;
+	AddressU = Wrap;
+	AddressV = Wrap;
+};
+
+SamplerState anisotropicSampler
+{
+	Filter = ANISOTROPIC;
 	AddressU = Wrap;
 	AddressV = Wrap;
 };
@@ -66,10 +85,27 @@ PSSceneIn VSScene(VSSceneIn input)
 	output.texCoord = input.texCoord;
 	return output;
 };
+PSSceneIn VSInstance(VSInstanceIn input)
+{
+	PSSceneIn output = (PSSceneIn)0;
+	float4 temp = float4(input.pos, 1.0f);
+	input.pos = mul(temp, mWorld);
+	
+	float x = input.pos.x, z = input.pos.z;
+	x = input.pos.x * cos(input.rotation) - input.pos.z * sin(input.rotation);
+	z = input.pos.x * sin(input.rotation) + input.pos.z * cos(input.rotation);
+
+	output.pos = float4(x, input.pos.y, z, 1);
+	output.pos.xyz += input.insPos;
+	output.pos = mul( output.pos, mul(mView, mProjection) );
+	
+	output.texCoord = input.texCoord;
+	return output;
+};
 
 float4 PSScene(PSSceneIn input) : SV_Target
 {
-	float3 col = diffuse.Sample(linearSampler, input.texCoord);
+	float3 col = diffuse.Sample(anisotropicSampler, input.texCoord);
 
 	return float4(col, 0);
 };
@@ -79,6 +115,18 @@ technique10 DrawScene
     pass p0
     {
         SetVertexShader( CompileShader( vs_4_0, VSScene() ) );
+        SetGeometryShader( NULL );
+        SetPixelShader( CompileShader( ps_4_0, PSScene() ) );
+	    
+	    SetRasterizerState( NoCulling );
+	    SetDepthStencilState( EnableDepth, 0 );
+    }  
+}
+technique10 RenderInstanced
+{
+    pass p0
+    {
+        SetVertexShader( CompileShader( vs_4_0, VSInstance() ) );
         SetGeometryShader( NULL );
         SetPixelShader( CompileShader( ps_4_0, PSScene() ) );
 	    

@@ -1,6 +1,7 @@
 #pragma once
 #include "KeyListener.h"
 #include "stdafx.h"
+
 class KeyManager
 {
 private:
@@ -11,13 +12,12 @@ private:
 	void notify(int key);
 public:
 	KeyManager();
+	~KeyManager();
+
 	//adds a subscriber
 	void attach(KeyListener* listener);
 	//removes a subscriber, but does not delete it
 	void detach(KeyListener* listener);
 	
-	
 	void update(double dt);
-	~KeyManager();
 };
-

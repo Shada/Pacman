@@ -80,6 +80,7 @@
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="GraphicsManager.cpp" />
     <ClCompile Include="HighScore.cpp" />
+    <ClCompile Include="InstanceManager.cpp" />
     <ClCompile Include="KeyListener.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="LevelReader.cpp" />
@@ -115,6 +116,7 @@
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="GraphicsManager.h" />
     <ClInclude Include="HighScore.h" />
+    <ClInclude Include="InstanceManager.h" />
     <ClInclude Include="KeyListener.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="LevelReader.h" />

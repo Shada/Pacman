@@ -1,5 +1,5 @@
 # 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
-# File Created: 25.04.2012 12:26:50
+# File Created: 27.04.2012 15:30:13
 
 newmtl Material__47
 	Ns 10.0000
@@ -12,4 +12,4 @@ newmtl Material__47
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Kd Images/cancrete.png
+	map_Kd Images\cancrete.png

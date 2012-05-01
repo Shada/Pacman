@@ -29,7 +29,6 @@ public:
 		rect.left   = (long)_pos.x;
 		rect.right  = (long)_pos.x + 300;
 
-
 		color = D3DXCOLOR(0.324f, 0.027f, 0.027f, 1.0f);
 	}
 

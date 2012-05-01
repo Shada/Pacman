@@ -9,9 +9,13 @@ LevelReader::LevelReader()
 	green.r = green.b = 0; green.g = 255;
 	white.r = white.g = white.b = 255;
 
+	iCorners = NULL;
+	iWalls = NULL;
+	iPills = NULL;
 
+	corner = pill = wall = NULL;
 	reader = new ObjReader();
-	objects = vector<GameObject*>();
+
 	ghosts = vector<Ghost*>();
 }
 
@@ -22,8 +26,6 @@ vector<Tile*> LevelReader::readFile(char* filename, const int _width, const int 
 
 	nTilesX = width / 3;
 	nTilesY = height / 3;
-
-	corner = m = NULL;
 
 	tiles = vector<Tile*>();
 	pixelData.resize(width);
@@ -45,6 +47,8 @@ vector<Tile*> LevelReader::readFile(char* filename, const int _width, const int 
 	file.close();
 
 	createTiles();
+
+	generateWalls();
 
 	placeCornerWalls();
 
@@ -100,10 +104,42 @@ void LevelReader::mapTiles(int x, int y, int tileIndex)
 	tiles.at(tileIndex)->setNeighbours(neighbours);
 }
 
+void LevelReader::generateWalls()
+{
+	wall = new Model("wall");
+	reader->readData("Models/wall.obj", wall);
+	iWalls = new InstanceManager( wall, 0 );
+
+	for(unsigned int i = 0; i < tiles.size(); i++)
+		for(int j = 0; j < 4; j++)
+			if(tiles.at(i)->checkDirection((Direction)j) == NULL)
+				placeWall(i, j);
+		
+	iWalls->mapBuffers();
+}
+
+void LevelReader::placeWall(int indexTile, int indexNeighbour)
+{
+	ID3D10EffectTechnique *tech = GraphicsManager::getInstance()->g_pTechRender;
+	float rotation, pi;
+	pi = (float)D3DX_PI;
+	D3DXVECTOR3 pos = tiles.at(indexTile)->getPos();
+	
+	if(indexNeighbour == 0 || indexNeighbour == 1)
+		rotation = indexNeighbour == 0.f ? 0 : pi;
+	else
+		rotation = indexNeighbour == 3 ? pi * 1.5f : pi * 0.5f;
+
+	iWalls->addObject(new GameObject(tiles.at(indexTile), tech, wall, pos, rotation));
+}
+
 void LevelReader::placePillsAndGhosts()
 {
 	ID3D10EffectTechnique *tech = GraphicsManager::getInstance()->g_pTechRender;
-	m = new Model("");
+	pill = new Model("");
+	reader->readData("Models/watch2.obj", pill);
+	iPills = new InstanceManager(pill, 0.001f);
+
 	for(unsigned int i = 0; i < tiles.size(); i++)
 	{
 		int x, y;
@@ -113,30 +149,43 @@ void LevelReader::placePillsAndGhosts()
 		D3DXVECTOR3 pos = tiles.at(i)->getPos();
 
 		if(pixelData[x][y] == yellow)
-			tiles.at(i)->setPill(new YellowPill(tiles.at(i), tech, m));
-
+		{
+			tiles.at(i)->setPill(new Pill(tiles.at(i), tech, pill));
+			iPills->addObject(tiles.at(i)->getPill());
+		}
+			
 		else if(pixelData[x][y] == blue)
-			tiles.at(i)->setPill(new BluePill(tiles.at(i), tech, m));
+		{
+			tiles.at(i)->setPill(new Pill(tiles.at(i), tech, pill));
+			iPills->addObject(tiles.at(i)->getPill());
+		}
 
-		else if(pixelData[x][y] != white && pixelData[x][y].g == 255)
-			ghosts.push_back(new Ghost(chooseAIType(pixelData[x][y]),tiles.at(i)));
+		else if( pixelData[x][y].g == 255 && pixelData[x][y] != white )
+			ghosts.push_back(new Ghost(chooseAIType(pixelData[x][y]), tiles.at(i)));
 	}
+	iPills->mapBuffers();
 }
 
 void LevelReader::placeCornerWalls()
 {
+	
 	D3DXVECTOR3 startPos = tiles.front()->getPos();
 	D3DXVECTOR2 dimensions = tiles.front()->getDim();
+	
 	corner = new Model("corner");
 	reader->readData("Models/corner.obj", corner);
 
+	iCorners = new InstanceManager(corner, 0);
+	
 	ID3D10EffectTechnique *tech = GraphicsManager::getInstance()->g_pTechRender;
 
 	for(int i = 0; i < height / 3 + 1; i++)
 		for(int j = 0; j < width / 3 + 1; j++)
-			objects.push_back(new GameObject(NULL, tech, corner, 
+			iCorners->addObject(new GameObject(NULL, tech, corner, 
 								D3DXVECTOR3(startPos.x + dimensions.x * j, 
 								startPos.y, startPos.z + dimensions.y * i), 0));
+		
+	iCorners->mapBuffers();
 }
 
 AI *LevelReader::chooseAIType(Pixel data)
@@ -154,6 +203,9 @@ AI *LevelReader::chooseAIType(Pixel data)
 
 LevelReader::~LevelReader()
 {
-	SAFE_DELETE( m );
+	//these will have to be deleted in the map later.
+	SAFE_DELETE( pill );
 	SAFE_DELETE( corner );
+	SAFE_DELETE( wall );
+	SAFE_DELETE( reader );
 }

@@ -12,7 +12,7 @@ void PolygonGroup::draw(ID3D10EffectTechnique* tech )
 {
 	GraphicsManager* m = GraphicsManager::getInstance();
 
-	m->useMaterial(&material);
+	m->useMaterial(material);
 	m->render(tech,bufferIndex,getVertexAmount());
 }
 void PolygonGroup::feedData(D3DXVECTOR3* vertex, D3DXVECTOR2* textureCoordinate, D3DXVECTOR3* normal)
